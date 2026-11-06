@@ -381,21 +381,17 @@ document.querySelectorAll('.card.changed').forEach(c=>c.classList.add('open'));
 (function(){
   const btn  = document.getElementById('theme-toggle');
   const html = document.documentElement;
-  const ICONS = {dark:'🌙', light:'☀️', system:'🌓'};
-  const ORDER = ['dark','light','system'];
-
   function apply(t){
     html.classList.remove('dark','light');
-    if(t!=='system') html.classList.add(t);
-    btn.textContent = ICONS[t];
+    html.classList.add(t);
+    btn.textContent = t==='dark' ? '🌙' : '☀️';
     localStorage.setItem('theme', t);
   }
   btn.addEventListener('click',()=>{
-    const cur = localStorage.getItem('theme')||'dark';
-    apply(ORDER[(ORDER.indexOf(cur)+1)%ORDER.length]);
+    apply((localStorage.getItem('theme')||'dark')==='dark' ? 'light' : 'dark');
   });
   // 初始圖示同步（class 已由 head script 設好）
-  btn.textContent = ICONS[localStorage.getItem('theme')||'dark'];
+  btn.textContent = (localStorage.getItem('theme')||'dark')==='dark' ? '🌙' : '☀️';
 })();
 
 // 搜尋 + 燈號篩選
@@ -534,8 +530,7 @@ def generate(report, prev_report=None, available_dates=None):
 <title>台股盤後 {date_disp}</title>
 <script>
 (function(){{
-  var t=localStorage.getItem('theme')||'dark';
-  if(t!=='system') document.documentElement.classList.add(t);
+  document.documentElement.classList.add(localStorage.getItem('theme')||'dark');
 }})();
 </script>
 <style>{CSS}</style>

@@ -92,6 +92,9 @@ body{
 .hdr-bull{color:#e03535;font-weight:700}
 .hdr-neu{color:var(--yellow);font-weight:700}
 .hdr-bear{color:#00aa62;font-weight:700}
+.rec-badge{font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;white-space:nowrap}
+.rec-buy{background:rgba(224,53,53,.13);color:#e03535}
+.rec-sell{background:rgba(0,170,98,.13);color:#00aa62}
 .name-row{display:flex;align-items:center;gap:4px;flex-wrap:wrap;margin:2px 0}
 .sid{font-size:11px;color:var(--sub)}
 .sname{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:80px}
@@ -179,9 +182,9 @@ body{
   </div>
   <div class="hdr-title">📊 台股盤後報告 11/7（六）</div>
   <div class="hdr-lights">
-    <span class="hdr-bull">▲ 多方 3</span>
+    <span class="hdr-bull">▲ 可買進 3</span>
     <span class="hdr-neu">— 觀望 1</span>
-    <span class="hdr-bear">▼ 注意 16</span>
+    <span class="hdr-bear">▼ 建議賣出 16</span>
   </div>
   <div class="hdr-hint">多方=留意進場機會・注意=留意風險</div>
   
@@ -203,7 +206,7 @@ body{
       <span class="light light-bear">▼</span>
       <div class="name-row">
         <span class="type-etf">ETF</span><span class="sid">0050</span><span class="sname">元大台灣50</span>
-        <span class="badge-heat cold">🧊 超跌</span>
+        <span class="badge-heat cold">🧊 超跌</span><span class="rec-badge rec-sell">建議賣出</span>
       </div>
       <div class="conclusion">技術面短期超跌，若基本面無惡化，可留意反彈機會。</div>
       <div class="top-sig sig-neg">📉 跌破 20 日均線</div>
@@ -267,7 +270,7 @@ body{
       <span class="light light-bear">▼</span>
       <div class="name-row">
         <span class="type-etf">ETF</span><span class="sid">009816</span><span class="sname">凱基台灣TOP50</span>
-        <span class="badge-heat cold">🧊 超跌</span>
+        <span class="badge-heat cold">🧊 超跌</span><span class="rec-badge rec-sell">建議賣出</span>
       </div>
       <div class="conclusion">技術面短期超跌，若基本面無惡化，可留意反彈機會。</div>
       <div class="top-sig sig-neg">📉 跌破 20 日均線</div>
@@ -331,7 +334,7 @@ body{
       <span class="light light-bear">▼</span>
       <div class="name-row">
         <span class="type-etf">ETF</span><span class="sid">0056</span><span class="sname">元大高股息</span>
-        <span class="badge-heat cold">🧊 超跌</span>
+        <span class="badge-heat cold">🧊 超跌</span><span class="rec-badge rec-sell">建議賣出</span>
       </div>
       <div class="conclusion">技術面短期超跌，若基本面無惡化，可留意反彈機會。</div>
       <div class="top-sig sig-neg">📉 跌破 20 日均線</div>
@@ -395,7 +398,7 @@ body{
       <span class="light light-bear">▼</span>
       <div class="name-row">
         <span class="type-etf">ETF</span><span class="sid">00878</span><span class="sname">國泰永續高股息</span>
-        <span class="badge-heat cold">🧊 超跌</span>
+        <span class="badge-heat cold">🧊 超跌</span><span class="rec-badge rec-sell">建議賣出</span>
       </div>
       <div class="conclusion">技術面短期超跌，若基本面無惡化，可留意反彈機會。</div>
       <div class="top-sig sig-neg">📉 跌破 20 日均線</div>
@@ -459,7 +462,7 @@ body{
       <span class="light light-bear">▼</span>
       <div class="name-row">
         <span class="type-etf">ETF</span><span class="sid">00919</span><span class="sname">群益台灣精選高息</span>
-        <span class="badge-heat cold">🧊 超跌</span>
+        <span class="badge-heat cold">🧊 超跌</span><span class="rec-badge rec-sell">建議賣出</span>
       </div>
       <div class="conclusion">技術面短期超跌，若基本面無惡化，可留意反彈機會。</div>
       <div class="top-sig sig-neg">📉 跌破 20 日均線</div>
@@ -523,7 +526,7 @@ body{
       <span class="light light-bear">▼</span>
       <div class="name-row">
         <span class="type-etf">ETF</span><span class="sid">00406A</span><span class="sname">主動中信台灣收益</span>
-        <span class="badge-heat cold">🧊 超跌</span>
+        <span class="badge-heat cold">🧊 超跌</span><span class="rec-badge rec-sell">建議賣出</span>
       </div>
       <div class="conclusion">技術面短期超跌，若基本面無惡化，可留意反彈機會。</div>
       <div class="top-sig sig-neg">📉 跌破 20 日均線</div>
@@ -587,7 +590,7 @@ body{
       <span class="light light-bear">▼</span>
       <div class="name-row">
         <span class="type-etf">ETF</span><span class="sid">00400A</span><span class="sname">主動國泰動能高息</span>
-        <span class="badge-heat cold">🧊 超跌</span>
+        <span class="badge-heat cold">🧊 超跌</span><span class="rec-badge rec-sell">建議賣出</span>
       </div>
       <div class="conclusion">技術面短期超跌，若基本面無惡化，可留意反彈機會。</div>
       <div class="top-sig sig-neg">📉 跌破 20 日均線</div>
@@ -651,7 +654,7 @@ body{
       <span class="light light-bear">▼</span>
       <div class="name-row">
         <span class="type-etf">ETF</span><span class="sid">00881</span><span class="sname">國泰台灣科技龍頭</span>
-        <span class="badge-heat cold">🧊 超跌</span>
+        <span class="badge-heat cold">🧊 超跌</span><span class="rec-badge rec-sell">建議賣出</span>
       </div>
       <div class="conclusion">技術面短期超跌，若基本面無惡化，可留意反彈機會。</div>
       <div class="top-sig sig-neg">📉 跌破 20 日均線</div>
@@ -715,7 +718,7 @@ body{
       <span class="light light-bear">▼</span>
       <div class="name-row">
         <span class="type-etf">ETF</span><span class="sid">00927</span><span class="sname">群益半導體收益</span>
-        <span class="badge-heat cold">🧊 超跌</span>
+        <span class="badge-heat cold">🧊 超跌</span><span class="rec-badge rec-sell">建議賣出</span>
       </div>
       <div class="conclusion">技術面短期超跌，若基本面無惡化，可留意反彈機會。</div>
       <div class="top-sig sig-neg">📉 跌破 20 日均線</div>
@@ -779,7 +782,7 @@ body{
       <span class="light light-bear">▼</span>
       <div class="name-row">
         <span class="type-etf">ETF</span><span class="sid">00891</span><span class="sname">中信關鍵半導體</span>
-        <span class="badge-heat cold">🧊 超跌</span>
+        <span class="badge-heat cold">🧊 超跌</span><span class="rec-badge rec-sell">建議賣出</span>
       </div>
       <div class="conclusion">技術面短期超跌，若基本面無惡化，可留意反彈機會。</div>
       <div class="top-sig sig-neg">📉 跌破 20 日均線</div>
@@ -847,7 +850,7 @@ body{
       <span class="light light-bull">▲</span>
       <div class="name-row">
         <span class="type-stk">個股</span><span class="sid">2891</span><span class="sname">中信金</span>
-        
+        <span class="rec-badge rec-buy">可買進</span>
       </div>
       <div class="conclusion">多項指標偏強，均線向上，趨勢明確，但留意追高風險。</div>
       <div class="top-sig sig-pos">📈 站上 20 日均線</div>
@@ -911,7 +914,7 @@ body{
       <span class="light light-bull">▲</span>
       <div class="name-row">
         <span class="type-stk">個股</span><span class="sid">2884</span><span class="sname">玉山金</span>
-        
+        <span class="rec-badge rec-buy">可買進</span>
       </div>
       <div class="conclusion">多項指標偏強，均線向上，趨勢明確，但留意追高風險。</div>
       <div class="top-sig sig-neg">📉 跌破 20 日均線</div>
@@ -975,7 +978,7 @@ body{
       <span class="light light-bull">▲</span>
       <div class="name-row">
         <span class="type-stk">個股</span><span class="sid">2412</span><span class="sname">中華電</span>
-        <span class="badge-heat hot">🔥 過熱</span>
+        <span class="badge-heat hot">🔥 過熱</span><span class="rec-badge rec-buy">可買進</span>
       </div>
       <div class="conclusion">技術面短期過熱，建議觀察是否有回調，中期趨勢偏多。</div>
       <div class="top-sig sig-pos">📈 站上 20 日均線</div>
@@ -1103,7 +1106,7 @@ body{
       <span class="light light-bear">▼</span>
       <div class="name-row">
         <span class="type-stk">個股</span><span class="sid">2330</span><span class="sname">台積電</span>
-        <span class="badge-heat cold">🧊 超跌</span>
+        <span class="badge-heat cold">🧊 超跌</span><span class="rec-badge rec-sell">建議賣出</span>
       </div>
       <div class="conclusion">技術面短期超跌，若基本面無惡化，可留意反彈機會。</div>
       <div class="top-sig sig-neg">📉 跌破 20 日均線</div>
@@ -1167,7 +1170,7 @@ body{
       <span class="light light-bear">▼</span>
       <div class="name-row">
         <span class="type-stk">個股</span><span class="sid">2454</span><span class="sname">聯發科</span>
-        <span class="badge-heat cold">🧊 超跌</span>
+        <span class="badge-heat cold">🧊 超跌</span><span class="rec-badge rec-sell">建議賣出</span>
       </div>
       <div class="conclusion">技術面短期超跌，若基本面無惡化，可留意反彈機會。</div>
       <div class="top-sig sig-neg">📉 跌破 20 日均線</div>
@@ -1231,7 +1234,7 @@ body{
       <span class="light light-bear">▼</span>
       <div class="name-row">
         <span class="type-stk">個股</span><span class="sid">2308</span><span class="sname">台達電</span>
-        <span class="badge-heat cold">🧊 超跌</span>
+        <span class="badge-heat cold">🧊 超跌</span><span class="rec-badge rec-sell">建議賣出</span>
       </div>
       <div class="conclusion">技術面短期超跌，若基本面無惡化，可留意反彈機會。</div>
       <div class="top-sig sig-neg">📉 跌破 20 日均線</div>
@@ -1295,7 +1298,7 @@ body{
       <span class="light light-bear">▼</span>
       <div class="name-row">
         <span class="type-stk">個股</span><span class="sid">2303</span><span class="sname">聯電</span>
-        <span class="badge-heat cold">🧊 超跌</span>
+        <span class="badge-heat cold">🧊 超跌</span><span class="rec-badge rec-sell">建議賣出</span>
       </div>
       <div class="conclusion">技術面短期超跌，若基本面無惡化，可留意反彈機會。</div>
       <div class="top-sig sig-neg">📉 跌破 20 日均線</div>
@@ -1359,7 +1362,7 @@ body{
       <span class="light light-bear">▼</span>
       <div class="name-row">
         <span class="type-stk">個股</span><span class="sid">3711</span><span class="sname">日月光投控</span>
-        <span class="badge-heat cold">🧊 超跌</span>
+        <span class="badge-heat cold">🧊 超跌</span><span class="rec-badge rec-sell">建議賣出</span>
       </div>
       <div class="conclusion">技術面短期超跌，若基本面無惡化，可留意反彈機會。</div>
       <div class="top-sig sig-neg">📉 跌破 20 日均線</div>
@@ -1423,7 +1426,7 @@ body{
       <span class="light light-bear">▼</span>
       <div class="name-row">
         <span class="type-stk">個股</span><span class="sid">2881</span><span class="sname">富邦金</span>
-        
+        <span class="rec-badge rec-sell">建議賣出</span>
       </div>
       <div class="conclusion">跌破中期均線，中期趨勢轉弱，宜觀望為主。</div>
       <div class="top-sig sig-neg">📉 跌破 20 日均線</div>

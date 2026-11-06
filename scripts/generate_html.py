@@ -88,6 +88,13 @@ def card(s, prev_light):
     if heat == 'overbought': heat_badge = '<span class="badge-heat hot">🔥 過熱</span>'
     elif heat == 'oversold': heat_badge = '<span class="badge-heat cold">🧊 超跌</span>'
 
+    if light == '🟢':
+        rec_badge = '<span class="rec-badge rec-buy">可買進</span>'
+    elif light == '🔴':
+        rec_badge = '<span class="rec-badge rec-sell">建議賣出</span>'
+    else:
+        rec_badge = ''
+
     type_badge = '<span class="type-etf">ETF</span>' if is_etf else '<span class="type-stk">個股</span>'
 
     # 主要訊號（最重要的一個）
@@ -191,7 +198,7 @@ def card(s, prev_light):
       {light_disp(light)}
       <div class="name-row">
         {type_badge}<span class="sid">{sid}</span><span class="sname">{name}</span>
-        {chg_badge}{heat_badge}
+        {chg_badge}{heat_badge}{rec_badge}
       </div>
       <div class="conclusion">{s.get("conclusion","")}</div>
       {main_sig}
@@ -289,6 +296,9 @@ body{
 .hdr-bull{color:#e03535;font-weight:700}
 .hdr-neu{color:var(--yellow);font-weight:700}
 .hdr-bear{color:#00aa62;font-weight:700}
+.rec-badge{font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;white-space:nowrap}
+.rec-buy{background:rgba(224,53,53,.13);color:#e03535}
+.rec-sell{background:rgba(0,170,98,.13);color:#00aa62}
 .name-row{display:flex;align-items:center;gap:4px;flex-wrap:wrap;margin:2px 0}
 .sid{font-size:11px;color:var(--sub)}
 .sname{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:80px}
@@ -499,9 +509,9 @@ def generate(report, prev_report=None, available_dates=None):
   </div>
   <div class="hdr-title">📊 台股盤後報告 {date_disp}</div>
   <div class="hdr-lights">
-    <span class="hdr-bull">▲ 多方 {summary.get("green",0)}</span>
+    <span class="hdr-bull">▲ 可買進 {summary.get("green",0)}</span>
     <span class="hdr-neu">— 觀望 {summary.get("yellow",0)}</span>
-    <span class="hdr-bear">▼ 注意 {summary.get("red",0)}</span>
+    <span class="hdr-bear">▼ 建議賣出 {summary.get("red",0)}</span>
   </div>
   <div class="hdr-hint">多方=留意進場機會・注意=留意風險</div>
   {changes_html}

@@ -274,7 +274,8 @@ body{
   border:1.5px solid var(--sep);overflow:hidden;min-width:0;
 }
 .card.changed{border-color:var(--blue)}
-/* 展開時佔滿整排（已移除：改為原位垂直展開，消除跳位問題） */
+/* 展開時佔滿整排 */
+.card.open{grid-column:span 2}
 .card-top{
   display:flex;justify-content:space-between;align-items:flex-start;
   padding:10px 10px 8px;cursor:pointer;gap:6px;
@@ -330,8 +331,8 @@ body{
 .pbar-labels .cur{color:var(--text);font-weight:600}
 .detail{display:none;padding:0 14px 14px;border-top:1px solid var(--sep)}
 .card.open .detail{display:block}
-.d-row{margin-top:10px}
-.d-col{margin-top:8px}
+.d-row{display:flex;gap:12px;margin-top:12px}
+.d-col{flex:1;min-width:0}
 .d-label{font-size:11px;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:.3px;margin-bottom:5px}
 .d-label.mt8{margin-top:10px}
 .chips{display:flex;flex-wrap:wrap;gap:4px}
@@ -367,12 +368,18 @@ body{
 '''
 
 JS = '''
-// 展開/收合（鎖住捲軸位置，右側卡片展開不跳位）
+// 展開/收合（補償捲軸，讓卡片保持在同一視覺位置）
 document.querySelectorAll('.card-top').forEach(el=>{
   el.addEventListener('click',()=>{
-    const y = window.scrollY;
-    el.closest('.card').classList.toggle('open');
-    requestAnimationFrame(()=>window.scrollTo(0, y));
+    const card = el.closest('.card');
+    const before = card.getBoundingClientRect().top;
+    card.classList.toggle('open');
+    requestAnimationFrame(()=>{
+      requestAnimationFrame(()=>{
+        const after = card.getBoundingClientRect().top;
+        window.scrollBy(0, after - before);
+      });
+    });
   });
 });
 document.querySelectorAll('.card.changed').forEach(c=>c.classList.add('open'));

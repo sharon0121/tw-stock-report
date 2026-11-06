@@ -1,0 +1,5 @@
+scripts/
+requirements.txt
+data/history/
+data/watchlist.json
+.github/

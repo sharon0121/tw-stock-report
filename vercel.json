@@ -1,5 +1,7 @@
 {
   "outputDirectory": "public",
+  "buildCommand": "",
+  "installCommand": "",
   "cleanUrls": true,
   "trailingSlash": false
 }

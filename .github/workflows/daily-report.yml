@@ -39,3 +39,4 @@ jobs:
           git add data/history/ public/
           git diff --cached --quiet || git commit -m "chore: 盤後報告 $(date +%Y-%m-%d)"
           git push
+

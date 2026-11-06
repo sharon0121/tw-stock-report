@@ -185,7 +185,7 @@ def card(s, prev_light):
 </div>'''
 
     card_cls = 'card changed' if changed else 'card'
-    return f'''<div class="{card_cls}" data-sid="{sid}" data-name="{name}">
+    return f'''<div class="{card_cls}" data-sid="{sid}" data-name="{name}" data-light="{light}">
   <div class="card-top">
     <div class="ct-left">
       {light_disp(light)}
@@ -252,7 +252,12 @@ body{
   text-decoration:none;padding:5px 8px;
 }
 .hdr-title{font-size:17px;font-weight:700;margin-bottom:8px}
-.hdr-lights{display:flex;gap:16px;font-size:14px;font-weight:600}
+.hdr-lights{display:flex;gap:6px;font-size:14px;font-weight:600}
+.hdr-lights span{cursor:pointer;padding:5px 12px;border-radius:20px;transition:background .15s,opacity .15s;user-select:none}
+.hdr-lights span:hover{opacity:.8}
+.hdr-bull.active{background:rgba(224,53,53,.18)}
+.hdr-neu.active{background:rgba(255,149,0,.18)}
+.hdr-bear.active{background:rgba(0,170,98,.18)}
 .hdr-changes{margin-top:6px;font-size:12px;color:var(--sub)}
 .hdr-hint{margin-top:4px;font-size:11px;color:var(--sub)}
 .group-label{
@@ -269,8 +274,7 @@ body{
   border:1.5px solid var(--sep);overflow:hidden;min-width:0;
 }
 .card.changed{border-color:var(--blue)}
-/* 展開時佔滿整排 */
-.card.open{grid-column:span 2}
+/* 展開時佔滿整排（已移除：改為原位垂直展開，消除跳位問題） */
 .card-top{
   display:flex;justify-content:space-between;align-items:flex-start;
   padding:10px 10px 8px;cursor:pointer;gap:6px;
@@ -326,8 +330,8 @@ body{
 .pbar-labels .cur{color:var(--text);font-weight:600}
 .detail{display:none;padding:0 14px 14px;border-top:1px solid var(--sep)}
 .card.open .detail{display:block}
-.d-row{display:flex;gap:12px;margin-top:12px}
-.d-col{flex:1;min-width:0}
+.d-row{margin-top:10px}
+.d-col{margin-top:8px}
 .d-label{font-size:11px;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:.3px;margin-bottom:5px}
 .d-label.mt8{margin-top:10px}
 .chips{display:flex;flex-wrap:wrap;gap:4px}
@@ -394,20 +398,23 @@ document.querySelectorAll('.card.changed').forEach(c=>c.classList.add('open'));
   btn.textContent = ICONS[localStorage.getItem('theme')||'dark'];
 })();
 
-// 搜尋
-const inp   = document.getElementById('search');
-const clrBtn= document.getElementById('search-clear');
-const noRes = document.getElementById('no-result');
-const grpE  = document.getElementById('grp-etf');
-const grpS  = document.getElementById('grp-stock');
+// 搜尋 + 燈號篩選
+const inp    = document.getElementById('search');
+const clrBtn = document.getElementById('search-clear');
+const noRes  = document.getElementById('no-result');
+const grpE   = document.getElementById('grp-etf');
+const grpS   = document.getElementById('grp-stock');
+let activeLight = null;
 
-function doSearch(){
+function filterCards(){
   const q = inp.value.trim().toLowerCase();
   clrBtn.style.display = q ? 'block' : 'none';
   document.querySelectorAll('.card').forEach(c=>{
-    const match = !q
+    const matchQ = !q
       || (c.dataset.sid  ||'').toLowerCase().includes(q)
       || (c.dataset.name ||'').toLowerCase().includes(q);
+    const matchL = !activeLight || c.dataset.light === activeLight;
+    const match  = matchQ && matchL;
     c.classList.toggle('hidden', !match);
     if(match && q) c.classList.add('open');
   });
@@ -420,8 +427,21 @@ function doSearch(){
   noRes.style.display = (!anyEtf && !anyStock) ? 'block' : 'none';
 }
 
-inp.addEventListener('input', doSearch);
-clrBtn.addEventListener('click',()=>{ inp.value=''; doSearch(); inp.focus(); });
+inp.addEventListener('input', filterCards);
+clrBtn.addEventListener('click',()=>{ inp.value=''; filterCards(); inp.focus(); });
+
+// 燈號篩選鈕
+const LIGHT_MAP = {'hdr-bull':'🟢','hdr-neu':'🟡','hdr-bear':'🔴'};
+document.querySelectorAll('.hdr-bull,.hdr-neu,.hdr-bear').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const cls   = [...btn.classList].find(c=>LIGHT_MAP[c]);
+    const light = LIGHT_MAP[cls];
+    activeLight = (activeLight===light) ? null : light;
+    document.querySelectorAll('.hdr-bull,.hdr-neu,.hdr-bear').forEach(b=>b.classList.remove('active'));
+    if(activeLight) btn.classList.add('active');
+    filterCards();
+  });
+});
 
 // 導航：前一天
 (function(){

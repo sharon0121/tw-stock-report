@@ -18,10 +18,10 @@
   --yellow:#ff9500;--dot:#007aff;
 }
 @media(prefers-color-scheme:dark){
-  :root{--bg:#000;--card:#1c1c1e;--text:#f5f5f7;--sub:#636366;--sep:#2c2c2e}
+  :root{--bg:#000;--card:#1c1c1e;--text:#f5f5f7;--sub:#aeaeb2;--sep:#2c2c2e}
 }
 /* 強制深/淺色（覆蓋 media query） */
-html.dark{--bg:#000;--card:#1c1c1e;--text:#f5f5f7;--sub:#636366;--sep:#2c2c2e}
+html.dark{--bg:#000;--card:#1c1c1e;--text:#f5f5f7;--sub:#aeaeb2;--sep:#2c2c2e}
 html.light{--bg:#f2f2f7;--card:#fff;--text:#1c1c1e;--sub:#8e8e93;--sep:#e5e5ea}
 html.dark .type-etf{background:#1a2a3a;color:#64b5f6}
 html.dark .type-stk{background:#3a1a1a;color:#ef9a9a}
@@ -93,8 +93,8 @@ body{
 .hdr-neu{color:var(--yellow);font-weight:700}
 .hdr-bear{color:#00aa62;font-weight:700}
 .rec-badge{font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;white-space:nowrap}
-.rec-buy{background:rgba(224,53,53,.13);color:#e03535}
-.rec-sell{background:rgba(0,170,98,.13);color:#00aa62}
+.rec-buy{background:rgba(255,59,48,.12);color:var(--red)}
+.rec-sell{background:rgba(52,199,89,.12);color:var(--green)}
 .name-row{display:flex;align-items:center;gap:4px;flex-wrap:wrap;margin:2px 0}
 .sid{font-size:11px;color:var(--sub)}
 .sname{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:80px}

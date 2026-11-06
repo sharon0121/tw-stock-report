@@ -1,0 +1,41 @@
+name: 台股盤後報告
+
+on:
+  schedule:
+    - cron: '45 8 * * 1-5'   # 08:45 UTC = 16:45 台灣時間（週一至五）
+  workflow_dispatch:            # 允許手動觸發
+
+permissions:
+  contents: write
+
+jobs:
+  generate-report:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Generate daily JSON report
+        env:
+          FINMIND_TOKEN: ${{ secrets.FINMIND_TOKEN }}
+        run: python scripts/main.py
+
+      - name: Generate HTML
+        run: python scripts/generate_html.py
+
+      - name: Commit and push new files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/history/ public/
+          git diff --cached --quiet || git commit -m "chore: 盤後報告 $(date +%Y-%m-%d)"
+          git push

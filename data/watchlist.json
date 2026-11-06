@@ -1,0 +1,26 @@
+{
+  "etf": [
+    { "id": "0050",   "name": "元大台灣50",          "type": "etf" },
+    { "id": "009816", "name": "凱基台灣TOP50",        "type": "etf" },
+    { "id": "0056",   "name": "元大高股息",            "type": "etf" },
+    { "id": "00878",  "name": "國泰永續高股息",        "type": "etf" },
+    { "id": "00919",  "name": "群益台灣精選高息",      "type": "etf" },
+    { "id": "00406A", "name": "主動中信台灣收益",      "type": "etf" },
+    { "id": "00400A", "name": "主動國泰動能高息",      "type": "etf" },
+    { "id": "00881",  "name": "國泰台灣科技龍頭",      "type": "etf" },
+    { "id": "00927",  "name": "群益半導體收益",        "type": "etf" },
+    { "id": "00891",  "name": "中信關鍵半導體",        "type": "etf" }
+  ],
+  "stock": [
+    { "id": "2330",   "name": "台積電",              "type": "stock" },
+    { "id": "2454",   "name": "聯發科",              "type": "stock" },
+    { "id": "2317",   "name": "鴻海",                "type": "stock" },
+    { "id": "2308",   "name": "台達電",              "type": "stock" },
+    { "id": "2303",   "name": "聯電",                "type": "stock" },
+    { "id": "3711",   "name": "日月光投控",           "type": "stock" },
+    { "id": "2881",   "name": "富邦金",              "type": "stock" },
+    { "id": "2891",   "name": "中信金",              "type": "stock" },
+    { "id": "2884",   "name": "玉山金",              "type": "stock" },
+    { "id": "2412",   "name": "中華電",              "type": "stock" }
+  ]
+}

@@ -217,6 +217,19 @@ CSS = '''
 @media(prefers-color-scheme:dark){
   :root{--bg:#000;--card:#1c1c1e;--text:#f5f5f7;--sub:#636366;--sep:#2c2c2e}
 }
+/* 強制深/淺色（覆蓋 media query） */
+html.dark{--bg:#000;--card:#1c1c1e;--text:#f5f5f7;--sub:#636366;--sep:#2c2c2e}
+html.light{--bg:#f2f2f7;--card:#fff;--text:#1c1c1e;--sub:#8e8e93;--sep:#e5e5ea}
+html.dark .type-etf{background:#1a2a3a;color:#64b5f6}
+html.dark .type-stk{background:#3a1a1a;color:#ef9a9a}
+html.dark .badge-chg{background:#1a2240;color:#64b5f6}
+html.dark .badge-heat.hot{background:#3a2000;color:#ffa726}
+html.dark .badge-heat.cold{background:#002040;color:#64b5f6}
+html.dark .chip{background:#2c2c2e}
+html.dark .chip.green{background:#0a2a0a;color:#66bb6a}
+html.dark .chip.red{background:#2a0a0a;color:#ef9a9a}
+.theme-btn{background:none;border:none;font-size:18px;cursor:pointer;padding:4px 6px;line-height:1;border-radius:8px}
+.theme-btn:hover{background:var(--sep)}
 *{box-sizing:border-box;margin:0;padding:0}
 body{
   font-family:-apple-system,'PingFang TC','Microsoft JhengHei',sans-serif;
@@ -350,11 +363,36 @@ body{
 '''
 
 JS = '''
-// 展開/收合
+// 展開/收合（鎖住捲軸位置，右側卡片展開不跳位）
 document.querySelectorAll('.card-top').forEach(el=>{
-  el.addEventListener('click',()=>el.closest('.card').classList.toggle('open'));
+  el.addEventListener('click',()=>{
+    const y = window.scrollY;
+    el.closest('.card').classList.toggle('open');
+    requestAnimationFrame(()=>window.scrollTo(0, y));
+  });
 });
 document.querySelectorAll('.card.changed').forEach(c=>c.classList.add('open'));
+
+// 深淺色切換
+(function(){
+  const btn  = document.getElementById('theme-toggle');
+  const html = document.documentElement;
+  const ICONS = {dark:'🌙', light:'☀️', system:'🌓'};
+  const ORDER = ['dark','light','system'];
+
+  function apply(t){
+    html.classList.remove('dark','light');
+    if(t!=='system') html.classList.add(t);
+    btn.textContent = ICONS[t];
+    localStorage.setItem('theme', t);
+  }
+  btn.addEventListener('click',()=>{
+    const cur = localStorage.getItem('theme')||'dark';
+    apply(ORDER[(ORDER.indexOf(cur)+1)%ORDER.length]);
+  });
+  // 初始圖示同步（class 已由 head script 設好）
+  btn.textContent = ICONS[localStorage.getItem('theme')||'dark'];
+})();
 
 // 搜尋
 const inp   = document.getElementById('search');
@@ -434,6 +472,7 @@ def generate(report, prev_report=None, available_dates=None):
   <div class="hdr-nav">
     <button class="nav-btn" id="nav-prev">← 前一天</button>
     <a href="today.html" class="nav-today">今天</a>
+    <button class="theme-btn" id="theme-toggle">🌙</button>
   </div>
   <div class="hdr-title">📊 台股盤後報告 {date_disp}</div>
   <div class="hdr-lights">
@@ -473,6 +512,12 @@ def generate(report, prev_report=None, available_dates=None):
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
 <title>台股盤後 {date_disp}</title>
+<script>
+(function(){{
+  var t=localStorage.getItem('theme')||'dark';
+  if(t!=='system') document.documentElement.classList.add(t);
+}})();
+</script>
 <style>{CSS}</style>
 </head>
 <body>

@@ -505,7 +505,10 @@ def generate(report, prev_report=None, available_dates=None):
   <div class="hdr-nav">
     <button class="nav-btn" id="nav-prev">← 前一天</button>
     <a href="today.html" class="nav-today">今天</a>
-    <button class="theme-btn" id="theme-toggle">🌙</button>
+    <div style="display:flex;gap:6px;align-items:center">
+      <a href="guide.html" class="nav-today" style="color:var(--blue)">📚 指南</a>
+      <button class="theme-btn" id="theme-toggle">🌙</button>
+    </div>
   </div>
   <div class="hdr-title">📊 台股盤後報告 {date_disp}</div>
   <div class="hdr-lights">
@@ -581,6 +584,228 @@ def generate(report, prev_report=None, available_dates=None):
 </html>'''
 
 
+def generate_guide():
+    """產生 public/guide.html 指標教學頁"""
+    GUIDE_CSS = '''
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f2f2f7;--card:#fff;--text:#1c1c1e;--sub:#8e8e93;
+  --sep:#e5e5ea;--blue:#007aff;--green:#34c759;--red:#ff3b30;
+  --yellow:#ff9500;
+}
+@media(prefers-color-scheme:dark){
+  :root{--bg:#000;--card:#1c1c1e;--text:#f5f5f7;--sub:#aeaeb2;--sep:#2c2c2e}
+}
+html.dark{--bg:#000;--card:#1c1c1e;--text:#f5f5f7;--sub:#aeaeb2;--sep:#2c2c2e}
+html.light{--bg:#f2f2f7;--card:#fff;--text:#1c1c1e;--sub:#8e8e93;--sep:#e5e5ea}
+body{
+  font-family:-apple-system,'PingFang TC','Microsoft JhengHei',sans-serif;
+  background:var(--bg);color:var(--text);
+  max-width:480px;margin:0 auto;padding-bottom:48px;font-size:14px;
+}
+.hdr{
+  background:var(--card);padding:12px 16px;
+  border-bottom:1px solid var(--sep);position:sticky;top:0;z-index:9;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.hdr-left{display:flex;align-items:center;gap:10px}
+.back-btn{
+  background:var(--bg);border:1px solid var(--sep);color:var(--blue);
+  font-size:13px;font-weight:600;padding:5px 12px;border-radius:8px;cursor:pointer;
+  text-decoration:none;white-space:nowrap;
+}
+.hdr-title{font-size:17px;font-weight:700}
+.theme-btn{background:none;border:none;font-size:18px;cursor:pointer;padding:4px 6px;border-radius:8px}
+.theme-btn:hover{background:var(--sep)}
+.section{margin:12px 10px 0;background:var(--card);border-radius:14px;overflow:hidden}
+.sec-hd{
+  padding:12px 14px 8px;font-size:13px;font-weight:700;
+  border-bottom:1px solid var(--sep);display:flex;align-items:center;gap:6px;
+}
+.sec-sub{font-size:11px;color:var(--sub);font-weight:400;margin-left:4px}
+.score-box{padding:12px 14px;display:flex;gap:8px;flex-wrap:wrap}
+.score-pill{
+  display:flex;align-items:center;gap:5px;padding:6px 12px;
+  border-radius:20px;font-size:13px;font-weight:600;
+}
+.pill-g{background:rgba(255,59,48,.1);color:#c0392b}
+.pill-y{background:rgba(255,149,0,.1);color:#d4a017}
+.pill-r{background:rgba(52,199,89,.1);color:#27ae60}
+html.dark .pill-g{background:rgba(192,57,43,.2)}
+html.dark .pill-y{background:rgba(212,160,23,.2)}
+html.dark .pill-r{background:rgba(39,174,96,.2)}
+.arrow{font-size:16px}
+.ind-list{padding:0 14px 10px}
+.ind-item{padding:10px 0;border-bottom:1px solid var(--sep)}
+.ind-item:last-child{border-bottom:none}
+.ind-name{font-size:13px;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:6px}
+.ind-desc{font-size:12px;color:var(--sub);line-height:1.6;margin-bottom:6px}
+.sig-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+.sig{font-size:11px;font-weight:600;padding:3px 10px;border-radius:12px}
+.sig-pos{background:rgba(255,59,48,.1);color:#c0392b}
+.sig-neg{background:rgba(52,199,89,.1);color:#27ae60}
+.sig-neu{background:rgba(142,142,147,.12);color:var(--sub)}
+html.dark .sig-pos{background:rgba(192,57,43,.2)}
+html.dark .sig-neg{background:rgba(39,174,96,.2)}
+html.dark .sig-neu{background:rgba(142,142,147,.15)}
+.heat-box{padding:10px 14px 12px;display:flex;gap:8px;flex-wrap:wrap}
+.heat-pill{font-size:12px;font-weight:600;padding:5px 12px;border-radius:12px;line-height:1.5}
+.heat-hot{background:#fff3e0;color:#e65100}
+.heat-cold{background:#e3f2fd;color:#0277bd}
+html.dark .heat-hot{background:#3a2000;color:#ffa726}
+html.dark .heat-cold{background:#002040;color:#64b5f6}
+.heat-desc{font-size:11px;color:var(--sub);margin-top:3px}
+.note{margin:12px 10px;padding:12px 14px;background:var(--card);border-radius:14px;
+  font-size:12px;color:var(--sub);line-height:1.7}
+.note strong{color:var(--text)}
+'''
+
+    indicators = [
+        {
+            'emoji': '📊', 'name': 'MA20（20日均線）', 'term': '短期',
+            'desc': '計算過去 20 個交易日收盤價的平均值。股價站上均線代表短期買盤強，跌破則買盤減弱。均線方向（上彎／下彎）反映近期動能變化。',
+            'pos': ['📈 股價站上 MA20（+1）', '↗ MA20 均線上彎（+1）'],
+            'neg': ['📉 股價跌破 MA20（−1）', '↘ MA20 均線下彎（−1）'],
+        },
+        {
+            'emoji': '📊', 'name': 'MA60（60日均線）', 'term': '中期',
+            'desc': '計算過去 60 個交易日的均價，代表中期市場趨勢。股價站上 MA60 為中期偏多，跌破則中期轉弱。新上市股或資料不足時不計此項。',
+            'pos': ['🟢 股價站上 MA60（+1）'],
+            'neg': ['🔴 股價跌破 MA60（−1）'],
+        },
+        {
+            'emoji': '⚡', 'name': 'KD 指標', 'term': '短期動能',
+            'desc': 'K 值衡量收盤在近期高低範圍內的相對位置（0～100）。KD 本身不計入燈號分數，但用來判斷過熱／超跌狀態。K 值黃金交叉（K 由下往上穿越 D）可視為買訊參考。',
+            'pos': [],
+            'neg': [],
+            'neu': ['KD > 80 → 標記🔥過熱，注意回調風險', 'KD < 20 → 標記🧊超跌，可留意反彈機會'],
+        },
+        {
+            'emoji': '⚡', 'name': 'RSI（相對強弱指標）', 'term': '短期動能',
+            'desc': '衡量近期漲跌力道的比率，介於 0～100。RSI 同樣不計入分數，但配合 KD 決定過熱／超跌標記。超買超賣需搭配其他訊號確認，避免追高殺低。',
+            'pos': [],
+            'neg': [],
+            'neu': ['RSI > 70 → 配合 KD 判斷是否過熱', 'RSI < 30 → 配合 KD 判斷是否超跌'],
+        },
+        {
+            'emoji': '🏦', 'name': '法人 5 日合計買賣超', 'term': '中期籌碼',
+            'desc': '統計外資＋投信過去 5 個交易日的合計買賣超張數。法人是台股最大資金來源，持續買超代表籌碼穩定集中，賣超則資金流出。',
+            'pos': ['💰 5 日合計買超（+1）'],
+            'neg': ['🏃 5 日合計賣超（−1）'],
+        },
+        {
+            'emoji': '📋', 'name': '季度收入年增率', 'term': '基本面（僅個股）',
+            'desc': '將本季營收與去年同期相比的成長率。正成長代表基本面向好，建議連續 2～3 季確認趨勢才能判定長期轉機。ETF 不適用此項。',
+            'pos': ['📊 年增率 > 0%（+1）'],
+            'neg': ['📊 年增率 < 0%（−1）'],
+        },
+        {
+            'emoji': '📌', 'name': '布林通道', 'term': '參考（不計分）',
+            'desc': '以 20 日均線為中心，上下各加減 2 倍標準差。股價觸及上緣為短期壓力區，觸及下緣為支撐區。通道收窄代表波動縮小、蓄勢待發。報告中顯示但不計入燈號分數。',
+            'pos': [],
+            'neg': [],
+            'neu': ['布↑（上緣）＝ 短期壓力參考價', '布↓（下緣）＝ 短期支撐參考價'],
+        },
+        {
+            'emoji': '📌', 'name': '支撐、壓力、風險警戒線', 'term': '參考（不計分）',
+            'desc': '支撐是過去常見買盤進場的價位，壓力是常見賣盤出現的價位。風險警戒線為近 60 日最低點，跌破代表中期下跌趨勢確立。這三個價位在報告中以進度條顯示，供判斷進出場位置參考。',
+            'pos': [],
+            'neg': [],
+            'neu': ['⛔ 風險警戒線＝近 60 日低點', '🔻 支撐＝買盤常出現的價位', '🔺 壓力＝賣盤常出現的價位'],
+        },
+    ]
+
+    ind_html = ''
+    for ind in indicators:
+        pos_html = ''.join(f'<span class="sig sig-pos">{s}</span>' for s in ind['pos'])
+        neg_html = ''.join(f'<span class="sig sig-neg">{s}</span>' for s in ind['neg'])
+        neu_html = ''.join(f'<span class="sig sig-neu">{s}</span>' for s in ind.get('neu', []))
+        sig_html = f'<div class="sig-row">{pos_html}{neg_html}{neu_html}</div>' if (pos_html or neg_html or neu_html) else ''
+        ind_html += f'''<div class="ind-item">
+  <div class="ind-name">{ind["emoji"]} {ind["name"]} <span class="sig sig-neu">{ind["term"]}</span></div>
+  <div class="ind-desc">{ind["desc"]}</div>
+  {sig_html}
+</div>'''
+
+    html = f'''<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>指標說明 — 股哥快報</title>
+<script>(function(){{document.documentElement.classList.add(localStorage.getItem('theme')||'dark');}})();</script>
+<style>{GUIDE_CSS}</style>
+</head>
+<body>
+<div class="hdr">
+  <div class="hdr-left">
+    <a href="today.html" class="back-btn">← Back</a>
+    <div class="hdr-title">📚 指標說明</div>
+  </div>
+  <button class="theme-btn" id="theme-toggle">🌙</button>
+</div>
+
+<div class="section">
+  <div class="sec-hd">🚦 燈號判斷規則<span class="sec-sub">每個訊號加減 1 分，累計決定燈號</span></div>
+  <div class="score-box">
+    <div class="score-pill pill-g"><span class="arrow">▲</span> 可買進：總分 ≥ 2</div>
+    <div class="score-pill pill-y"><span>—</span> 觀望：總分 −1 ～ 1</div>
+    <div class="score-pill pill-r"><span class="arrow">▼</span> 建議賣出：總分 ≤ −2</div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="sec-hd">🔥🧊 過熱／超跌標記<span class="sec-sub">不影響燈號，但改變結論文字</span></div>
+  <div class="heat-box">
+    <div>
+      <div class="heat-pill heat-hot">🔥 過熱：KD &gt; 80 或 RSI &gt; 70</div>
+      <div class="heat-desc">即使分數為正，也建議觀察是否有回調再進場</div>
+    </div>
+    <div>
+      <div class="heat-pill heat-cold">🧊 超跌：KD &lt; 20 或 RSI &lt; 30</div>
+      <div class="heat-desc">即使分數為負，若基本面無惡化，可留意反彈機會</div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="sec-hd">📋 各指標詳細說明</div>
+  <div class="ind-list">{ind_html}</div>
+</div>
+
+<div class="note">
+  <strong>使用提醒</strong><br>
+  本系統以技術面為主，分數只是量化參考，不代表必漲必跌。<br>
+  遇到多個指標同向（如股價跌破 MA20＋MA60＋法人賣超），訊號較強；訊號分歧時建議觀望。<br>
+  基本面（季度收入）僅個股適用，ETF 以法人籌碼和均線為主要判斷依據。
+</div>
+
+<script>
+(function(){{
+  const btn = document.getElementById('theme-toggle');
+  const html = document.documentElement;
+  function apply(t){{
+    html.classList.remove('dark','light');
+    html.classList.add(t);
+    btn.textContent = t==='dark' ? '🌙' : '☀️';
+    localStorage.setItem('theme', t);
+  }}
+  btn.addEventListener('click',()=>{{
+    apply((localStorage.getItem('theme')||'dark')==='dark' ? 'light' : 'dark');
+  }});
+  btn.textContent = (localStorage.getItem('theme')||'dark')==='dark' ? '🌙' : '☀️';
+}})();
+</script>
+</body>
+</html>'''
+
+    out = os.path.join(PUBLIC_DIR, 'guide.html')
+    with open(out, 'w', encoding='utf-8') as f:
+        f.write(html)
+    print(f'寫出：{out}')
+
+
 def main(report_date=None):
     if not report_date:
         report_date = date.today().isoformat()
@@ -618,6 +843,8 @@ def main(report_date=None):
     with open(today_p, 'w', encoding='utf-8') as f:
         f.write(html)
     print(f'複製：{today_p}')
+
+    generate_guide()
 
 
 if __name__ == '__main__':

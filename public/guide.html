@@ -83,6 +83,8 @@ html.dark .sig-ref{background:rgba(0,122,255,.2)}
 .note{margin:12px 10px;padding:12px 14px;background:var(--card);border-radius:14px;
   font-size:12px;color:var(--sub);line-height:1.7}
 .note strong{color:var(--text)}
+.score-bar{margin:10px 14px 8px}
+.viz{overflow:hidden}
 </style>
 </head>
 <body>
@@ -100,6 +102,20 @@ html.dark .sig-ref{background:rgba(0,122,255,.2)}
     <div class="score-pill pill-g"><span class="arrow">▲</span> 可買進：總分 ≥ 2</div>
     <div class="score-pill pill-y"><span>—</span> 觀望：總分 −1 ～ 1</div>
     <div class="score-pill pill-r"><span class="arrow">▼</span> 建議賣出：總分 ≤ −2</div>
+  </div>
+  <div class="score-bar">
+    <div style="display:flex;height:28px;border-radius:6px;overflow:hidden">
+      <div style="width:25%;background:#27ae60;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff">▼ 賣出</div>
+      <div style="width:50%;background:#d4a017;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff">— 觀望</div>
+      <div style="width:25%;background:#c0392b;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff">▲ 買進</div>
+    </div>
+    <div style="position:relative;height:16px;font-size:9px;color:#8e8e93;margin-top:3px">
+      <span style="position:absolute;left:0">−4</span>
+      <span style="position:absolute;left:25%;transform:translateX(-50%)">−2</span>
+      <span style="position:absolute;left:50%;transform:translateX(-50%)">0</span>
+      <span style="position:absolute;left:75%;transform:translateX(-50%)">+2</span>
+      <span style="position:absolute;right:0">+4</span>
+    </div>
   </div>
 </div>
 
@@ -122,34 +138,42 @@ html.dark .sig-ref{background:rgba(0,122,255,.2)}
   <div class="ind-list"><div class="ind-item">
   <div class="ind-name">📊 MA20（20日均線） <span class="sig sig-neu">短期・計分</span></div>
   <div class="ind-desc">計算過去 20 個交易日收盤價的平均值。股價站上均線代表短期買盤強，跌破則買盤減弱。均線方向（上彎／下彎）反映近期動能變化。</div>
+  <svg width="100%" viewBox="0 0 260 60" style="display:block;margin:8px 0 2px"><line x1="10" y1="55" x2="250" y2="55" stroke="#e5e5ea" stroke-width="0.5"/><polyline points="10,42 60,40 110,38 160,34 210,28 250,23" fill="none" stroke="#007aff" stroke-width="2"/><polyline points="10,50 60,46 110,38 160,26 210,15 250,8" fill="none" stroke="#c0392b" stroke-width="1.5" stroke-dasharray="3,2"/><circle cx="110" cy="38" r="4" fill="#d4a017"/><text x="115" y="35" fill="#d4a017" font-size="9">黃金交叉</text><text x="248" y="11" fill="#c0392b" font-size="8" text-anchor="end">股價</text><text x="248" y="33" fill="#007aff" font-size="8" text-anchor="end">MA20</text></svg>
   <div class="sig-row"><span class="sig sig-pos">📈 股價站上 MA20（+1）</span><span class="sig sig-pos">↗ MA20 均線上彎（+1）</span><span class="sig sig-neg">📉 股價跌破 MA20（−1）</span><span class="sig sig-neg">↘ MA20 均線下彎（−1）</span></div>
 </div><div class="ind-item">
   <div class="ind-name">📊 MA60（60日均線） <span class="sig sig-neu">中期・計分</span></div>
   <div class="ind-desc">計算過去 60 個交易日的均價，代表中期市場趨勢。股價站上 MA60 為中期偏多，跌破則中期轉弱。新上市股或資料不足時不計此項。</div>
+  
   <div class="sig-row"><span class="sig sig-pos">🟢 股價站上 MA60（+1）</span><span class="sig sig-neg">🔴 股價跌破 MA60（−1）</span></div>
 </div><div class="ind-item">
   <div class="ind-name">⚡ KD 指標（隨機指標） <span class="sig sig-neu">短期動能・過熱/超跌判斷</span></div>
   <div class="ind-desc">K 值衡量收盤在近期高低範圍內的相對位置（0～100）。本系統不計入燈號分數，但用來標記過熱／超跌狀態，影響結論文字。K 值黃金交叉（K 由下往上穿越 D）可視為買訊參考。</div>
+  <div style="margin:8px 0 4px"><div style="display:flex;height:22px;border-radius:5px;overflow:hidden"><div style="width:20%;background:#1565c0;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff">超跌</div><div style="width:60%;background:#78909c;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff">正常區間</div><div style="width:20%;background:#bf360c;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff">過熱</div></div><div style="position:relative;height:14px;font-size:9px;color:#8e8e93;margin-top:1px"><span style="position:absolute;left:0">0</span><span style="position:absolute;left:20%;transform:translateX(-50%)">20</span><span style="position:absolute;left:80%;transform:translateX(-50%)">80</span><span style="position:absolute;right:0">100</span></div></div>
   <div class="sig-row"><span class="sig sig-neu">KD > 80 → 標記 🔥 過熱，提醒注意回調</span><span class="sig sig-neu">KD < 20 → 標記 🧊 超跌，可留意反彈機會</span></div>
 </div><div class="ind-item">
   <div class="ind-name">⚡ RSI（相對強弱指標） <span class="sig sig-neu">短期動能・過熱/超跌判斷</span></div>
   <div class="ind-desc">衡量近期漲跌力道的比率，介於 0～100。配合 KD 共同決定過熱／超跌標記；任一條件成立即觸發。超買超賣需搭配其他訊號確認，避免追高殺低。</div>
+  <div style="margin:8px 0 4px"><div style="display:flex;height:22px;border-radius:5px;overflow:hidden"><div style="width:30%;background:#1565c0;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff">超跌</div><div style="width:40%;background:#78909c;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff">正常區間</div><div style="width:30%;background:#bf360c;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff">過熱</div></div><div style="position:relative;height:14px;font-size:9px;color:#8e8e93;margin-top:1px"><span style="position:absolute;left:0">0</span><span style="position:absolute;left:30%;transform:translateX(-50%)">30</span><span style="position:absolute;left:70%;transform:translateX(-50%)">70</span><span style="position:absolute;right:0">100</span></div></div>
   <div class="sig-row"><span class="sig sig-neu">RSI > 70（且 KD > 80）→ 過熱標記</span><span class="sig sig-neu">RSI < 30（且 KD < 20）→ 超跌標記</span></div>
 </div><div class="ind-item">
   <div class="ind-name">🏦 法人 5 日合計買賣超 <span class="sig sig-neu">中期籌碼・計分</span></div>
   <div class="ind-desc">統計外資＋投信過去 5 個交易日的合計買賣超張數。法人是台股最大資金來源，持續買超代表籌碼穩定集中，賣超則資金流出。短期避險賣出無需過度恐慌，需觀察方向是否持續。</div>
+  
   <div class="sig-row"><span class="sig sig-pos">💰 5 日合計買超（+1）</span><span class="sig sig-neg">🏃 5 日合計賣超（−1）</span></div>
 </div><div class="ind-item">
   <div class="ind-name">📋 季度收入年增率 <span class="sig sig-neu">基本面・計分（僅個股）</span></div>
   <div class="ind-desc">將本季營收與去年同期相比的成長率。正成長代表基本面向好，建議連續 2～3 季確認趨勢才能判定長期轉機。ETF 持股分散，不適用此項。</div>
+  
   <div class="sig-row"><span class="sig sig-pos">📊 年增率 > 0%（+1）</span><span class="sig sig-neg">📊 年增率 < 0%（−1）</span></div>
 </div><div class="ind-item">
   <div class="ind-name">📌 布林通道 & 標準差 <span class="sig sig-neu">波動度・報告顯示（不計分）</span></div>
   <div class="ind-desc">布林通道以 20 日均線為中心，上下各加減 2 倍標準差。標準差衡量股價偏離均值的程度：數值大代表波動劇烈，數值小代表趨於平穩。通道收窄（標準差縮小）常是大行情前的蓄勢信號。</div>
+  <svg width="100%" viewBox="0 0 260 65" style="display:block;margin:8px 0 2px"><path d="M10,10 C80,8 130,14 180,18 C210,20 240,19 250,18" fill="none" stroke="#c0392b" stroke-width="1.5" stroke-dasharray="3,2"/><path d="M10,32 C80,30 130,34 180,36 C210,37 240,37 250,36" fill="none" stroke="#007aff" stroke-width="2"/><path d="M10,54 C80,52 130,56 180,58 C210,59 240,58 250,57" fill="none" stroke="#27ae60" stroke-width="1.5" stroke-dasharray="3,2"/><path d="M10,10 C80,8 130,14 180,18 C210,20 240,19 250,18 L250,57 C240,58 210,59 180,58 C130,56 80,52 10,54 Z" fill="rgba(0,122,255,0.07)"/><text x="248" y="12" fill="#c0392b" font-size="8" text-anchor="end">上緣（壓力）</text><text x="248" y="38" fill="#007aff" font-size="8" text-anchor="end">MA20中線</text><text x="248" y="61" fill="#27ae60" font-size="8" text-anchor="end">下緣（支撐）</text></svg>
   <div class="sig-row"><span class="sig sig-neu">布↑（上緣）= 短期壓力參考</span><span class="sig sig-neu">布↓（下緣）= 短期支撐參考</span><span class="sig sig-neu">通道愈窄 → 波動縮小、蓄勢待發</span></div>
 </div><div class="ind-item">
   <div class="ind-name">📌 支撐、壓力、風險警戒線 <span class="sig sig-neu">價位參考・報告顯示（不計分）</span></div>
   <div class="ind-desc">支撐是過去常見買盤進場的價位，壓力是常見賣盤出現的價位。風險警戒線為近 60 日最低點，跌破代表中期下跌趨勢確立。在報告中以進度條顯示，供判斷進出場位置參考。</div>
+  
   <div class="sig-row"><span class="sig sig-neu">⛔ 風險警戒線 = 近 60 日低點</span><span class="sig sig-neu">🔻 支撐 = 買盤常出現的價位</span><span class="sig sig-neu">🔺 壓力 = 賣盤常出現的價位</span></div>
 </div></div>
 </div>
@@ -159,22 +183,27 @@ html.dark .sig-ref{background:rgba(0,122,255,.2)}
   <div class="ind-list"><div class="ind-item">
   <div class="ind-name">📈 EMA（指數平滑移動平均線） <span class="sig sig-ref">趨勢</span></div>
   <div class="ind-desc">與 MA 相似，但對近期數據賦予更高權重，對市場變化反應更快、更靈敏。常用參數：12日、26日（短期），50日、200日（長期）。</div>
+  <svg width="100%" viewBox="0 0 260 55" style="display:block;margin:8px 0 2px"><line x1="10" y1="50" x2="250" y2="50" stroke="#e5e5ea" stroke-width="0.5"/><polyline points="10,42 60,38 110,30 160,20 210,12 250,8" fill="none" stroke="#ff9500" stroke-width="2"/><polyline points="10,44 60,41 110,36 160,27 210,18 250,13" fill="none" stroke="#007aff" stroke-width="1.5" stroke-dasharray="3,2"/><text x="248" y="10" fill="#ff9500" font-size="8" text-anchor="end">EMA（反應快）</text><text x="248" y="22" fill="#007aff" font-size="8" text-anchor="end">MA（反應慢）</text><text x="10" y="48" fill="#8e8e93" font-size="7">← 相同走勢，EMA 更貼近近期價格</text></svg>
   <div class="sig-row"><span class="sig sig-neu">短期 EMA 上穿長期 EMA → 黃金交叉（買訊參考）</span><span class="sig sig-neu">短期 EMA 下穿長期 EMA → 死亡交叉（賣訊參考）</span><span class="sig sig-neu">與 MA 比較：EMA 反應更快，但雜訊也更多</span></div>
 </div><div class="ind-item">
   <div class="ind-name">📉 MACD（平滑異同移動平均線） <span class="sig sig-ref">動能趨勢</span></div>
   <div class="ind-desc">由 12日EMA 減去 26日EMA 得到 MACD 線，再以 9日EMA 形成信號線；兩線之差形成柱狀圖。是判斷趨勢轉折的常用工具，可同時看方向與動能強度。</div>
+  <svg width="100%" viewBox="0 0 260 65" style="display:block;margin:8px 0 2px"><text x="130" y="10" fill="#8e8e93" font-size="8" text-anchor="middle">MACD 柱狀圖示意</text><line x1="10" y1="38" x2="250" y2="38" stroke="#8e8e93" stroke-width="1"/><rect x="18" y="20" width="16" height="18" rx="2" fill="#c0392b" opacity="0.8"/><rect x="40" y="14" width="16" height="24" rx="2" fill="#c0392b" opacity="0.8"/><rect x="62" y="22" width="16" height="16" rx="2" fill="#c0392b" opacity="0.8"/><rect x="84" y="34" width="16" height="4" rx="2" fill="#c0392b" opacity="0.5"/><rect x="106" y="38" width="16" height="8" rx="2" fill="#27ae60" opacity="0.8"/><rect x="128" y="38" width="16" height="14" rx="2" fill="#27ae60" opacity="0.8"/><rect x="150" y="38" width="16" height="10" rx="2" fill="#27ae60" opacity="0.8"/><rect x="172" y="38" width="16" height="4" rx="2" fill="#27ae60" opacity="0.5"/><rect x="194" y="26" width="16" height="12" rx="2" fill="#c0392b" opacity="0.8"/><rect x="216" y="20" width="16" height="18" rx="2" fill="#c0392b" opacity="0.8"/><text x="62" y="62" fill="#c0392b" font-size="8" text-anchor="middle">正值→多頭</text><text x="150" y="62" fill="#27ae60" font-size="8" text-anchor="middle">負值→空頭</text><text x="210" y="62" fill="#c0392b" font-size="8" text-anchor="middle">↑反轉</text></svg>
   <div class="sig-row"><span class="sig sig-neu">MACD 線上穿信號線 → 買訊參考</span><span class="sig sig-neu">MACD 線下穿信號線 → 賣訊參考</span><span class="sig sig-neu">柱狀圖由負轉正 → 動能由空轉多</span><span class="sig sig-neu">柱狀圖持續縮小 → 趨勢可能減弱或反轉</span></div>
 </div><div class="ind-item">
   <div class="ind-name">🌀 斐波那契回調（Fibonacci Retracement） <span class="sig sig-ref">支撐壓力</span></div>
   <div class="ind-desc">依斐波那契數列比例（23.6%、38.2%、50%、61.8%、78.6%）標示潛在的支撐與壓力價位。股價從高點下跌或從低點反彈時，常在這些比例處出現停頓或反轉。</div>
+  <svg width="100%" viewBox="0 0 260 92" style="display:block;margin:8px 0 2px"><text x="34" y="13" fill="#c0392b" font-size="8" text-anchor="end">100%</text><line x1="38" y1="10" x2="250" y2="10" stroke="#c0392b" stroke-width="1.5"/><text x="34" y="30" fill="#8e8e93" font-size="8" text-anchor="end">78.6%</text><line x1="38" y1="27" x2="250" y2="27" stroke="#8e8e93" stroke-width="1" stroke-dasharray="2,2"/><text x="34" y="44" fill="#d4a017" font-size="8" text-anchor="end">61.8%★</text><line x1="38" y1="41" x2="250" y2="41" stroke="#d4a017" stroke-width="1.5" stroke-dasharray="2,2"/><text x="34" y="55" fill="#8e8e93" font-size="8" text-anchor="end">50%</text><line x1="38" y1="52" x2="250" y2="52" stroke="#8e8e93" stroke-width="1" stroke-dasharray="2,2"/><text x="34" y="65" fill="#d4a017" font-size="8" text-anchor="end">38.2%★</text><line x1="38" y1="62" x2="250" y2="62" stroke="#d4a017" stroke-width="1.5" stroke-dasharray="2,2"/><text x="34" y="78" fill="#8e8e93" font-size="8" text-anchor="end">23.6%</text><line x1="38" y1="75" x2="250" y2="75" stroke="#8e8e93" stroke-width="1" stroke-dasharray="2,2"/><text x="34" y="90" fill="#27ae60" font-size="8" text-anchor="end">0%</text><line x1="38" y1="87" x2="250" y2="87" stroke="#27ae60" stroke-width="1.5"/><text x="145" y="22" fill="#8e8e93" font-size="7" text-anchor="middle">★ = 最關鍵支撐/壓力位</text></svg>
   <div class="sig-row"><span class="sig sig-neu">38.2% 與 61.8% 是最常被關注的支撐/壓力位</span><span class="sig sig-neu">跌破 61.8% 回調位，常視為趨勢可能繼續走弱</span><span class="sig sig-neu">常用於設定止損位與目標價</span></div>
 </div><div class="ind-item">
   <div class="ind-name">☁️ 一目均衡表（Ichimoku Cloud） <span class="sig sig-ref">趨勢・支撐壓力</span></div>
   <div class="ind-desc">由轉換線、基準線、先行帶A、先行帶B、遲行線五條線組成的複合指標。「雲層」（先行帶A與B之間的區域）是核心，可同時呈現趨勢、支撐壓力與未來預測。</div>
+  <svg width="100%" viewBox="0 0 260 70" style="display:block;margin:8px 0 2px"><path d="M10,35 C60,33 100,40 150,46 C200,52 230,50 250,48" fill="none" stroke="#8e8e93" stroke-width="1" stroke-dasharray="2,2"/><path d="M10,50 C60,48 100,56 150,62 C200,67 230,65 250,63" fill="none" stroke="#8e8e93" stroke-width="1" stroke-dasharray="2,2"/><path d="M10,35 C60,33 100,40 150,46 C200,52 230,50 250,48 L250,63 C230,65 200,67 150,62 C100,56 60,48 10,50 Z" fill="rgba(100,100,200,0.2)"/><polyline points="10,15 60,14 110,16 160,18 210,14 250,12" fill="none" stroke="#ff9500" stroke-width="2"/><text x="248" y="11" fill="#ff9500" font-size="8" text-anchor="end">股價（偏多↑）</text><text x="130" y="47" fill="#8e8e93" font-size="8" text-anchor="middle">雲層（支撐壓力區）</text><text x="130" y="68" fill="#8e8e93" font-size="8" text-anchor="middle">股價在雲上→偏多，在雲下→偏空</text></svg>
   <div class="sig-row"><span class="sig sig-neu">股價在雲層上方 → 偏多趨勢</span><span class="sig sig-neu">股價在雲層下方 → 偏空趨勢</span><span class="sig sig-neu">雲層由綠轉紅 → 趨勢轉弱訊號</span><span class="sig sig-neu">雲層愈厚 → 支撐／壓力愈強</span></div>
 </div><div class="ind-item">
   <div class="ind-name">📐 ADX（平均趨向指數） <span class="sig sig-ref">趨勢強度</span></div>
   <div class="ind-desc">衡量趨勢的強弱程度，介於 0～100，但不指示方向（多空）。需搭配 MA 或 MACD 判斷方向後，用 ADX 確認趨勢是否足夠強勁值得進場。</div>
+  <div style="margin:8px 0 4px"><div style="display:flex;height:22px;border-radius:5px;overflow:hidden"><div style="width:25%;background:#78909c;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff">橫盤</div><div style="width:75%;background:#007aff;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff">趨勢明確</div></div><div style="position:relative;height:14px;font-size:9px;color:#8e8e93;margin-top:1px"><span style="position:absolute;left:0">0</span><span style="position:absolute;left:25%;transform:translateX(-50%)">25</span><span style="position:absolute;right:0">100</span></div></div>
   <div class="sig-row"><span class="sig sig-neu">ADX > 25 → 趨勢明確，訊號參考性較高</span><span class="sig sig-neu">ADX < 25 → 橫盤整理，均線訊號可靠性降低</span><span class="sig sig-neu">ADX 持續上升 → 趨勢加速；持續下降 → 趨勢走弱</span></div>
 </div></div>
 </div>

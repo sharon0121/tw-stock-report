@@ -655,77 +655,118 @@ html.dark .sig-neu{background:rgba(142,142,147,.15)}
 html.dark .heat-hot{background:#3a2000;color:#ffa726}
 html.dark .heat-cold{background:#002040;color:#64b5f6}
 .heat-desc{font-size:11px;color:var(--sub);margin-top:3px}
+.sig-ref{background:rgba(0,122,255,.1);color:var(--blue)}
+html.dark .sig-ref{background:rgba(0,122,255,.2)}
+.sec-hd-ref{padding:12px 14px 8px;font-size:13px;font-weight:700;
+  border-bottom:1px solid var(--sep);display:flex;align-items:center;gap:6px;
+  color:var(--blue)}
 .note{margin:12px 10px;padding:12px 14px;background:var(--card);border-radius:14px;
   font-size:12px;color:var(--sub);line-height:1.7}
 .note strong{color:var(--text)}
 '''
 
-    indicators = [
+    # 本系統使用的指標
+    indicators_active = [
         {
-            'emoji': '📊', 'name': 'MA20（20日均線）', 'term': '短期',
+            'emoji': '📊', 'name': 'MA20（20日均線）', 'term': '短期・計分',
             'desc': '計算過去 20 個交易日收盤價的平均值。股價站上均線代表短期買盤強，跌破則買盤減弱。均線方向（上彎／下彎）反映近期動能變化。',
             'pos': ['📈 股價站上 MA20（+1）', '↗ MA20 均線上彎（+1）'],
             'neg': ['📉 股價跌破 MA20（−1）', '↘ MA20 均線下彎（−1）'],
         },
         {
-            'emoji': '📊', 'name': 'MA60（60日均線）', 'term': '中期',
+            'emoji': '📊', 'name': 'MA60（60日均線）', 'term': '中期・計分',
             'desc': '計算過去 60 個交易日的均價，代表中期市場趨勢。股價站上 MA60 為中期偏多，跌破則中期轉弱。新上市股或資料不足時不計此項。',
             'pos': ['🟢 股價站上 MA60（+1）'],
             'neg': ['🔴 股價跌破 MA60（−1）'],
         },
         {
-            'emoji': '⚡', 'name': 'KD 指標', 'term': '短期動能',
-            'desc': 'K 值衡量收盤在近期高低範圍內的相對位置（0～100）。KD 本身不計入燈號分數，但用來判斷過熱／超跌狀態。K 值黃金交叉（K 由下往上穿越 D）可視為買訊參考。',
+            'emoji': '⚡', 'name': 'KD 指標（隨機指標）', 'term': '短期動能・過熱/超跌判斷',
+            'desc': 'K 值衡量收盤在近期高低範圍內的相對位置（0～100）。本系統不計入燈號分數，但用來標記過熱／超跌狀態，影響結論文字。K 值黃金交叉（K 由下往上穿越 D）可視為買訊參考。',
             'pos': [],
             'neg': [],
-            'neu': ['KD > 80 → 標記🔥過熱，注意回調風險', 'KD < 20 → 標記🧊超跌，可留意反彈機會'],
+            'neu': ['KD > 80 → 標記 🔥 過熱，提醒注意回調', 'KD < 20 → 標記 🧊 超跌，可留意反彈機會'],
         },
         {
-            'emoji': '⚡', 'name': 'RSI（相對強弱指標）', 'term': '短期動能',
-            'desc': '衡量近期漲跌力道的比率，介於 0～100。RSI 同樣不計入分數，但配合 KD 決定過熱／超跌標記。超買超賣需搭配其他訊號確認，避免追高殺低。',
+            'emoji': '⚡', 'name': 'RSI（相對強弱指標）', 'term': '短期動能・過熱/超跌判斷',
+            'desc': '衡量近期漲跌力道的比率，介於 0～100。配合 KD 共同決定過熱／超跌標記；任一條件成立即觸發。超買超賣需搭配其他訊號確認，避免追高殺低。',
             'pos': [],
             'neg': [],
-            'neu': ['RSI > 70 → 配合 KD 判斷是否過熱', 'RSI < 30 → 配合 KD 判斷是否超跌'],
+            'neu': ['RSI > 70（且 KD > 80）→ 過熱標記', 'RSI < 30（且 KD < 20）→ 超跌標記'],
         },
         {
-            'emoji': '🏦', 'name': '法人 5 日合計買賣超', 'term': '中期籌碼',
-            'desc': '統計外資＋投信過去 5 個交易日的合計買賣超張數。法人是台股最大資金來源，持續買超代表籌碼穩定集中，賣超則資金流出。',
+            'emoji': '🏦', 'name': '法人 5 日合計買賣超', 'term': '中期籌碼・計分',
+            'desc': '統計外資＋投信過去 5 個交易日的合計買賣超張數。法人是台股最大資金來源，持續買超代表籌碼穩定集中，賣超則資金流出。短期避險賣出無需過度恐慌，需觀察方向是否持續。',
             'pos': ['💰 5 日合計買超（+1）'],
             'neg': ['🏃 5 日合計賣超（−1）'],
         },
         {
-            'emoji': '📋', 'name': '季度收入年增率', 'term': '基本面（僅個股）',
-            'desc': '將本季營收與去年同期相比的成長率。正成長代表基本面向好，建議連續 2～3 季確認趨勢才能判定長期轉機。ETF 不適用此項。',
+            'emoji': '📋', 'name': '季度收入年增率', 'term': '基本面・計分（僅個股）',
+            'desc': '將本季營收與去年同期相比的成長率。正成長代表基本面向好，建議連續 2～3 季確認趨勢才能判定長期轉機。ETF 持股分散，不適用此項。',
             'pos': ['📊 年增率 > 0%（+1）'],
             'neg': ['📊 年增率 < 0%（−1）'],
         },
         {
-            'emoji': '📌', 'name': '布林通道', 'term': '參考（不計分）',
-            'desc': '以 20 日均線為中心，上下各加減 2 倍標準差。股價觸及上緣為短期壓力區，觸及下緣為支撐區。通道收窄代表波動縮小、蓄勢待發。報告中顯示但不計入燈號分數。',
+            'emoji': '📌', 'name': '布林通道 & 標準差', 'term': '波動度・報告顯示（不計分）',
+            'desc': '布林通道以 20 日均線為中心，上下各加減 2 倍標準差。標準差衡量股價偏離均值的程度：數值大代表波動劇烈，數值小代表趨於平穩。通道收窄（標準差縮小）常是大行情前的蓄勢信號。',
             'pos': [],
             'neg': [],
-            'neu': ['布↑（上緣）＝ 短期壓力參考價', '布↓（下緣）＝ 短期支撐參考價'],
+            'neu': ['布↑（上緣）= 短期壓力參考', '布↓（下緣）= 短期支撐參考', '通道愈窄 → 波動縮小、蓄勢待發'],
         },
         {
-            'emoji': '📌', 'name': '支撐、壓力、風險警戒線', 'term': '參考（不計分）',
-            'desc': '支撐是過去常見買盤進場的價位，壓力是常見賣盤出現的價位。風險警戒線為近 60 日最低點，跌破代表中期下跌趨勢確立。這三個價位在報告中以進度條顯示，供判斷進出場位置參考。',
+            'emoji': '📌', 'name': '支撐、壓力、風險警戒線', 'term': '價位參考・報告顯示（不計分）',
+            'desc': '支撐是過去常見買盤進場的價位，壓力是常見賣盤出現的價位。風險警戒線為近 60 日最低點，跌破代表中期下跌趨勢確立。在報告中以進度條顯示，供判斷進出場位置參考。',
             'pos': [],
             'neg': [],
-            'neu': ['⛔ 風險警戒線＝近 60 日低點', '🔻 支撐＝買盤常出現的價位', '🔺 壓力＝賣盤常出現的價位'],
+            'neu': ['⛔ 風險警戒線 = 近 60 日低點', '🔻 支撐 = 買盤常出現的價位', '🔺 壓力 = 賣盤常出現的價位'],
         },
     ]
 
-    ind_html = ''
-    for ind in indicators:
-        pos_html = ''.join(f'<span class="sig sig-pos">{s}</span>' for s in ind['pos'])
-        neg_html = ''.join(f'<span class="sig sig-neg">{s}</span>' for s in ind['neg'])
-        neu_html = ''.join(f'<span class="sig sig-neu">{s}</span>' for s in ind.get('neu', []))
-        sig_html = f'<div class="sig-row">{pos_html}{neg_html}{neu_html}</div>' if (pos_html or neg_html or neu_html) else ''
-        ind_html += f'''<div class="ind-item">
-  <div class="ind-name">{ind["emoji"]} {ind["name"]} <span class="sig sig-neu">{ind["term"]}</span></div>
+    # 延伸學習：本系統目前尚未使用的指標
+    indicators_ref = [
+        {
+            'emoji': '📈', 'name': 'EMA（指數平滑移動平均線）', 'term': '趨勢',
+            'desc': '與 MA 相似，但對近期數據賦予更高權重，對市場變化反應更快、更靈敏。常用參數：12日、26日（短期），50日、200日（長期）。',
+            'neu': ['短期 EMA 上穿長期 EMA → 黃金交叉（買訊參考）', '短期 EMA 下穿長期 EMA → 死亡交叉（賣訊參考）', '與 MA 比較：EMA 反應更快，但雜訊也更多'],
+        },
+        {
+            'emoji': '📉', 'name': 'MACD（平滑異同移動平均線）', 'term': '動能趨勢',
+            'desc': '由 12日EMA 減去 26日EMA 得到 MACD 線，再以 9日EMA 形成信號線；兩線之差形成柱狀圖。是判斷趨勢轉折的常用工具，可同時看方向與動能強度。',
+            'neu': ['MACD 線上穿信號線 → 買訊參考', 'MACD 線下穿信號線 → 賣訊參考', '柱狀圖由負轉正 → 動能由空轉多', '柱狀圖持續縮小 → 趨勢可能減弱或反轉'],
+        },
+        {
+            'emoji': '🌀', 'name': '斐波那契回調（Fibonacci Retracement）', 'term': '支撐壓力',
+            'desc': '依斐波那契數列比例（23.6%、38.2%、50%、61.8%、78.6%）標示潛在的支撐與壓力價位。股價從高點下跌或從低點反彈時，常在這些比例處出現停頓或反轉。',
+            'neu': ['38.2% 與 61.8% 是最常被關注的支撐/壓力位', '跌破 61.8% 回調位，常視為趨勢可能繼續走弱', '常用於設定止損位與目標價'],
+        },
+        {
+            'emoji': '☁️', 'name': '一目均衡表（Ichimoku Cloud）', 'term': '趨勢・支撐壓力',
+            'desc': '由轉換線、基準線、先行帶A、先行帶B、遲行線五條線組成的複合指標。「雲層」（先行帶A與B之間的區域）是核心，可同時呈現趨勢、支撐壓力與未來預測。',
+            'neu': ['股價在雲層上方 → 偏多趨勢', '股價在雲層下方 → 偏空趨勢', '雲層由綠轉紅 → 趨勢轉弱訊號', '雲層愈厚 → 支撐／壓力愈強'],
+        },
+        {
+            'emoji': '📐', 'name': 'ADX（平均趨向指數）', 'term': '趨勢強度',
+            'desc': '衡量趨勢的強弱程度，介於 0～100，但不指示方向（多空）。需搭配 MA 或 MACD 判斷方向後，用 ADX 確認趨勢是否足夠強勁值得進場。',
+            'neu': ['ADX > 25 → 趨勢明確，訊號參考性較高', 'ADX < 25 → 橫盤整理，均線訊號可靠性降低', 'ADX 持續上升 → 趨勢加速；持續下降 → 趨勢走弱'],
+        },
+    ]
+
+    def build_ind_html(inds, ref=False):
+        html = ''
+        tag_cls = 'sig-ref' if ref else 'sig-neu'
+        for ind in inds:
+            pos_html = ''.join(f'<span class="sig sig-pos">{s}</span>' for s in ind.get('pos', []))
+            neg_html = ''.join(f'<span class="sig sig-neg">{s}</span>' for s in ind.get('neg', []))
+            neu_html = ''.join(f'<span class="sig sig-neu">{s}</span>' for s in ind.get('neu', []))
+            sig_html = f'<div class="sig-row">{pos_html}{neg_html}{neu_html}</div>' if (pos_html or neg_html or neu_html) else ''
+            html += f'''<div class="ind-item">
+  <div class="ind-name">{ind["emoji"]} {ind["name"]} <span class="sig {tag_cls}">{ind["term"]}</span></div>
   <div class="ind-desc">{ind["desc"]}</div>
   {sig_html}
 </div>'''
+        return html
+
+    ind_active_html = build_ind_html(indicators_active)
+    ind_ref_html    = build_ind_html(indicators_ref, ref=True)
 
     html = f'''<!DOCTYPE html>
 <html lang="zh-TW">
@@ -770,8 +811,13 @@ html.dark .heat-cold{background:#002040;color:#64b5f6}
 </div>
 
 <div class="section">
-  <div class="sec-hd">📋 各指標詳細說明</div>
-  <div class="ind-list">{ind_html}</div>
+  <div class="sec-hd">📋 本系統使用的指標</div>
+  <div class="ind-list">{ind_active_html}</div>
+</div>
+
+<div class="section">
+  <div class="sec-hd-ref">📖 延伸學習（本系統目前尚未使用）</div>
+  <div class="ind-list">{ind_ref_html}</div>
 </div>
 
 <div class="note">

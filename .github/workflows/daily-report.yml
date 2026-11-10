@@ -42,5 +42,5 @@ jobs:
       - name: Trigger LINE notification
         if: success()
         run: |
-          curl -s -X POST https://line-secretary.vercel.app/api/notify/stock-report             -H "Authorization: Bearer ${{ secrets.NOTIFY_SECRET }}"             -H "Content-Type: application/json"             -w "
+          curl -s -X POST https://line-secretary-iota.vercel.app/api/notify/stock-report             -H "Authorization: Bearer ${{ secrets.NOTIFY_SECRET }}"             -H "Content-Type: application/json"             -w "
 HTTP %{http_code}" | tail -2

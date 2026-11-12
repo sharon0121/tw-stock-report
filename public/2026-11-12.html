@@ -1,0 +1,1602 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>台股盤後 11/12（四）</title>
+<script>
+(function(){
+  document.documentElement.classList.add(localStorage.getItem('theme')||'dark');
+})();
+</script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f2f2f7;--card:#fff;--text:#1c1c1e;--sub:#8e8e93;
+  --sep:#e5e5ea;--blue:#007aff;--green:#34c759;--red:#ff3b30;
+  --yellow:#ff9500;--dot:#007aff;
+}
+@media(prefers-color-scheme:dark){
+  :root{--bg:#000;--card:#1c1c1e;--text:#f5f5f7;--sub:#aeaeb2;--sep:#2c2c2e}
+}
+/* 強制深/淺色（覆蓋 media query） */
+html.dark{--bg:#000;--card:#1c1c1e;--text:#f5f5f7;--sub:#aeaeb2;--sep:#2c2c2e}
+html.light{--bg:#f2f2f7;--card:#fff;--text:#1c1c1e;--sub:#8e8e93;--sep:#e5e5ea}
+html.dark .type-etf{background:#1a2a3a;color:#64b5f6}
+html.dark .type-stk{background:#3a1a1a;color:#ef9a9a}
+html.dark .badge-chg{background:#1a2240;color:#64b5f6}
+html.dark .badge-heat.hot{background:#3a2000;color:#ffa726}
+html.dark .badge-heat.cold{background:#002040;color:#64b5f6}
+html.dark .chip{background:#2c2c2e}
+html.dark .chip.green{background:#0a2a0a;color:#66bb6a}
+html.dark .chip.red{background:#2a0a0a;color:#ef9a9a}
+.theme-btn{background:none;border:none;font-size:18px;cursor:pointer;padding:4px 6px;line-height:1;border-radius:8px}
+.theme-btn:hover{background:var(--sep)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:-apple-system,'PingFang TC','Microsoft JhengHei',sans-serif;
+  background:var(--bg);color:var(--text);
+  max-width:480px;margin:0 auto;padding-bottom:48px;font-size:14px;
+}
+.hdr{
+  background:var(--card);padding:10px 16px 12px;
+  border-bottom:1px solid var(--sep);position:sticky;top:0;z-index:9;
+}
+.hdr-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.nav-btn{
+  background:var(--bg);border:1px solid var(--sep);color:var(--blue);
+  font-size:13px;font-weight:600;padding:5px 12px;border-radius:8px;
+  cursor:pointer;white-space:nowrap;
+}
+.nav-btn:disabled{color:var(--sub);cursor:default;opacity:.4}
+.nav-today{
+  font-size:12px;color:var(--sub);font-weight:600;
+  text-decoration:none;padding:5px 8px;
+}
+.hdr-title{font-size:17px;font-weight:700;margin-bottom:8px}
+.hdr-lights{display:flex;gap:6px;font-size:14px;font-weight:600}
+.hdr-lights span{cursor:pointer;padding:5px 12px;border-radius:20px;transition:background .15s,opacity .15s;user-select:none}
+.hdr-lights span:hover{opacity:.8}
+.hdr-bull.active{background:rgba(224,53,53,.18)}
+.hdr-neu.active{background:rgba(255,149,0,.18)}
+.hdr-bear.active{background:rgba(0,170,98,.18)}
+.hdr-changes{margin-top:6px;font-size:12px;color:var(--sub)}
+.hdr-hint{margin-top:4px;font-size:11px;color:var(--sub)}
+.group-label{
+  font-size:11px;font-weight:700;color:var(--sub);letter-spacing:.5px;
+  padding:12px 16px 4px;text-transform:uppercase
+}
+/* 兩欄 grid */
+.card-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:6px;padding:0 8px;
+}
+.card{
+  background:var(--card);border-radius:12px;
+  border:1.5px solid var(--sep);overflow:hidden;min-width:0;
+}
+.card.changed{border-color:var(--blue)}
+/* 展開時佔滿整排 */
+.card.open{grid-column:span 2}
+.card-top{
+  display:flex;justify-content:space-between;align-items:flex-start;
+  padding:10px 10px 8px;cursor:pointer;gap:6px;
+}
+.ct-left{flex:1;min-width:0;overflow:hidden}
+.ct-right{text-align:right;flex-shrink:0}
+.light,.light-bull,.light-neu,.light-bear{font-size:20px;line-height:1;font-weight:800}
+.light-bull{color:#e03535}
+.light-neu{color:var(--yellow)}
+.light-bear{color:#00aa62}
+.hdr-bull{color:#e03535;font-weight:700}
+.hdr-neu{color:var(--yellow);font-weight:700}
+.hdr-bear{color:#00aa62;font-weight:700}
+.rec-badge{font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;white-space:nowrap}
+.rec-buy{background:rgba(255,59,48,.12);color:var(--red)}
+.rec-sell{background:rgba(52,199,89,.12);color:var(--green)}
+.name-row{display:flex;align-items:center;gap:4px;flex-wrap:wrap;margin:2px 0}
+.sid{font-size:11px;color:var(--sub)}
+.sname{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:80px}
+.close-price{font-size:18px;font-weight:700;line-height:1.1}
+.chg-val{font-size:12px;font-weight:600}
+.chg-val.up{color:var(--red)}
+.chg-val.dn{color:var(--green)}
+.conclusion{font-size:11px;color:var(--sub);margin-top:3px;line-height:1.4;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+/* 展開後結論不截斷 */
+.card.open .conclusion{display:block;-webkit-line-clamp:unset}
+/* 主要訊號（一行） */
+.top-sig{font-size:12px;font-weight:600;margin-top:5px}
+.top-sig.sig-pos{color:var(--red)}
+.top-sig.sig-neg{color:var(--green)}
+.toggle-btn{font-size:12px;color:var(--blue);margin-top:6px;display:flex;align-items:center;gap:3px;font-weight:600;white-space:nowrap}
+.toggle-icon{font-size:14px;transition:transform .2s;display:inline-block}
+.card.open .toggle-icon{transform:rotate(45deg)}
+.type-etf,.type-stk{font-size:10px;padding:1px 5px;border-radius:4px;font-weight:600}
+.type-etf{background:#e8f4fd;color:#0277bd}
+.type-stk{background:#fce4ec;color:#c62828}
+@media(prefers-color-scheme:dark){
+  .type-etf{background:#1a2a3a;color:#64b5f6}
+  .type-stk{background:#3a1a1a;color:#ef9a9a}
+}
+.badge-chg{font-size:11px;background:#e8f0fe;color:var(--blue);padding:1px 6px;border-radius:10px;font-weight:600}
+.badge-heat{font-size:11px;padding:1px 6px;border-radius:10px;font-weight:600}
+.badge-heat.hot{background:#fff3e0;color:#e65100}
+.badge-heat.cold{background:#e3f2fd;color:#0277bd}
+@media(prefers-color-scheme:dark){
+  .badge-chg{background:#1a2240;color:#64b5f6}
+  .badge-heat.hot{background:#3a2000;color:#ffa726}
+  .badge-heat.cold{background:#002040;color:#64b5f6}
+}
+.pbar{padding:0 14px 10px}
+.pbar-track{position:relative;height:5px;background:var(--sep);border-radius:3px;margin-bottom:5px}
+.pbar-fill{height:100%;background:linear-gradient(90deg,var(--green),var(--yellow),var(--red));border-radius:3px}
+.pbar-dot{position:absolute;top:-4px;width:12px;height:12px;background:var(--dot);border:2px solid var(--card);border-radius:50%}
+.pbar-labels{display:flex;justify-content:space-between;font-size:10px;color:var(--sub)}
+.pbar-labels .cur{color:var(--text);font-weight:600}
+.detail{display:none;padding:0 14px 14px;border-top:1px solid var(--sep)}
+.card.open .detail{display:block}
+.d-row{display:flex;gap:12px;margin-top:12px}
+.d-col{flex:1;min-width:0}
+.d-label{font-size:11px;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:.3px;margin-bottom:5px}
+.d-label.mt8{margin-top:10px}
+.chips{display:flex;flex-wrap:wrap;gap:4px}
+.chip{font-size:12px;padding:3px 8px;border-radius:6px;background:var(--bg);color:var(--text);font-weight:500}
+.chip.green{background:#e8f8ed;color:#1b5e20}
+.chip.red{background:#fdecea;color:#b71c1c}
+@media(prefers-color-scheme:dark){
+  .chip{background:#2c2c2e}
+  .chip.green{background:#0a2a0a;color:#66bb6a}
+  .chip.red{background:#2a0a0a;color:#ef9a9a}
+}
+.scenarios{display:flex;flex-direction:column;gap:5px;margin-top:4px}
+.sc-row{font-size:12px;padding:7px 10px;border-radius:7px;line-height:1.4}
+.sc-row.up{background:rgba(52,199,89,.1);border-left:3px solid var(--green)}
+.sc-row.dn{background:rgba(255,59,48,.1);border-left:3px solid var(--red)}
+.obs{padding-left:16px;font-size:12px;color:var(--sub)}
+.obs li{margin-bottom:3px;line-height:1.4}
+.lesson{background:var(--card);margin:8px 8px 4px;border-radius:12px;padding:14px;border:1px solid var(--sep)}
+.lesson-hd{font-size:11px;font-weight:700;color:var(--sub);letter-spacing:.5px;margin-bottom:5px}
+.lesson-title{font-size:14px;font-weight:600;margin-bottom:4px}
+.lesson-body{font-size:12px;color:var(--sub);line-height:1.6}
+.disc{font-size:11px;color:var(--sub);text-align:center;padding:16px}
+/* 搜尋欄 */
+.search-wrap{padding:8px 8px 4px;position:sticky;top:var(--hdr-h,110px);z-index:8;background:var(--bg)}
+.search-box{display:flex;align-items:center;background:var(--card);border:1.5px solid var(--sep);border-radius:10px;padding:0 10px;gap:6px}
+.search-icon{font-size:14px;flex-shrink:0}
+#search{flex:1;border:none;background:transparent;padding:10px 0;font-size:15px;color:var(--text);outline:none;min-width:0}
+#search::placeholder{color:var(--sub);font-size:13px}
+.clear-btn{background:none;border:none;color:var(--sub);font-size:16px;cursor:pointer;padding:4px;line-height:1}
+.no-result{text-align:center;padding:32px 16px;color:var(--sub);font-size:14px}
+.card.hidden{display:none}
+.group-label.hidden{display:none}
+</style>
+</head>
+<body>
+<div class="hdr">
+  <div class="hdr-nav">
+    <button class="nav-btn" id="nav-prev">← 前一天</button>
+    <a href="today.html" class="nav-today">今天</a>
+    <div style="display:flex;gap:6px;align-items:center">
+      <a href="guide.html" class="nav-today" style="color:var(--blue)">📚 指南</a>
+      <button class="theme-btn" id="theme-toggle">🌙</button>
+    </div>
+  </div>
+  <div class="hdr-title">📊 台股盤後報告 11/12（四）</div>
+  <div class="hdr-lights">
+    <span class="hdr-bull">▲ 可買進 3</span>
+    <span class="hdr-neu">— 觀望 2</span>
+    <span class="hdr-bear">▼ 建議賣出 15</span>
+  </div>
+  <div class="hdr-hint">多方=留意進場機會・注意=留意風險</div>
+  <div class="hdr-changes">⚡ 燈號異動：2330 台積電、2454 聯發科、2317 鴻海</div>
+</div>
+<script>window.__REPORT_DATE="2026-11-12";window.__AVAILABLE_DATES=["2026-11-07", "2026-11-09", "2026-11-10", "2026-11-11", "2026-11-12"];</script>
+<div class="search-wrap">
+  <div class="search-box">
+    <span class="search-icon">🔍</span>
+    <input id="search" type="search" placeholder="輸入代號或名稱，例如 2330 或台積電" autocomplete="off">
+    <button id="search-clear" class="clear-btn" style="display:none">✕</button>
+  </div>
+</div>
+<div id="no-result" class="no-result" style="display:none">找不到符合的股票</div>
+<div id="grp-etf" class="group-label">📦 ETF</div>
+<div class="card-grid" id="grid-etf">
+<div class="card" data-sid="0050" data-name="元大台灣50" data-light="🔴">
+  <div class="card-top">
+    <div class="ct-left">
+      <span class="light light-bear">▼</span>
+      <div class="name-row">
+        <span class="type-etf">ETF</span><span class="sid">0050</span><span class="sname">元大台灣50</span>
+        <span class="rec-badge rec-sell">建議賣出</span>
+      </div>
+      <div class="conclusion">跌破中期均線，中期趨勢轉弱，宜觀望為主。</div>
+      <div class="top-sig sig-neg">📉 跌破 20 日均線</div>
+    </div>
+    <div class="ct-right">
+      <div class="close-price">101.0</div>
+      <div class="chg-val dn">-2.18%</div>
+      <div class="toggle-btn">詳情<span class="toggle-icon">＋</span></div>
+    </div>
+  </div>
+  <div class="pbar">
+  <div class="pbar-track"><div class="pbar-fill" style="width:55%"></div>
+    <div class="pbar-dot" style="left:calc(55% - 5px)"></div></div>
+  <div class="pbar-labels">
+    <span>⛔87.5</span><span>🔻97.5</span>
+    <span class="cur">▲101.0</span><span>🔺111.8</span>
+  </div>
+</div>
+  <div class="detail">
+  <div class="d-row">
+    <div class="d-col">
+      <div class="d-label">均線</div>
+      <div class="chips">
+        <div class="chip">MA5 98.8</div>
+        <div class="chip">MA20 103.9</div>
+        <div class="chip">MA60 107.5</div>
+        <div class="chip">↘下彎</div>
+      </div>
+    </div>
+    <div class="d-col">
+      <div class="d-label">動能</div>
+      <div class="chips">
+        <div class="chip">KD 62/44</div>
+        <div class="chip">RSI 40</div>
+        <div class="chip">布↑113.4</div>
+        <div class="chip">布↓94.4</div>
+      </div>
+    </div>
+  </div>
+  <div class="d-row">
+    <div class="d-col">
+      <div class="d-label">法人 5 日</div>
+      <div class="chips">
+        <div class="chip red">外資 -1.1億</div>
+        <div class="chip green">投信 +3265萬</div>
+      </div>
+    </div>
+    <div class="d-col">
+      <div class="d-label">基本面</div>
+      <div class="chips"></div>
+    </div>
+  </div>
+  <div class="d-label mt8">走勢情境</div>
+  <div class="scenarios"><div class="sc-row up">① 若守住 98 支撐 → 有機會嘗試挑戰 112 壓力區</div><div class="sc-row dn">② 若跌破 98 → 下一支撐看 88，中期趨勢可能轉弱</div></div>
+  <div class="d-label mt8">觀察重點</div>
+  <ul class="obs"><li>近 3 天能否站回 20 日均線（104）</li><li>支撐區 98 是否守住</li><li>外資連續賣超是否改變方向</li></ul>
+</div>
+</div><div class="card" data-sid="009816" data-name="凱基台灣TOP50" data-light="🔴">
+  <div class="card-top">
+    <div class="ct-left">
+      <span class="light light-bear">▼</span>
+      <div class="name-row">
+        <span class="type-etf">ETF</span><span class="sid">009816</span><span class="sname">凱基台灣TOP50</span>
+        <span class="rec-badge rec-sell">建議賣出</span>
+      </div>
+      <div class="conclusion">跌破中期均線，中期趨勢轉弱，宜觀望為主。</div>
+      <div class="top-sig sig-neg">📉 跌破 20 日均線</div>
+    </div>
+    <div class="ct-right">
+      <div class="close-price">15.0</div>
+      <div class="chg-val dn">-2.08%</div>
+      <div class="toggle-btn">詳情<span class="toggle-icon">＋</span></div>
+    </div>
+  </div>
+  <div class="pbar">
+  <div class="pbar-track"><div class="pbar-fill" style="width:54%"></div>
+    <div class="pbar-dot" style="left:calc(54% - 5px)"></div></div>
+  <div class="pbar-labels">
+    <span>⛔13.2</span><span>🔻14.5</span>
+    <span class="cur">▲15.0</span><span>🔺16.6</span>
+  </div>
+</div>
+  <div class="detail">
+  <div class="d-row">
+    <div class="d-col">
+      <div class="d-label">均線</div>
+      <div class="chips">
+        <div class="chip">MA5 14.7</div>
+        <div class="chip">MA20 15.5</div>
+        <div class="chip">MA60 15.9</div>
+        <div class="chip">↘下彎</div>
+      </div>
+    </div>
+    <div class="d-col">
+      <div class="d-label">動能</div>
+      <div class="chips">
+        <div class="chip">KD 59/42</div>
+        <div class="chip">RSI 40</div>
+        <div class="chip">布↑16.9</div>
+        <div class="chip">布↓14.1</div>
+      </div>
+    </div>
+  </div>
+  <div class="d-row">
+    <div class="d-col">
+      <div class="d-label">法人 5 日</div>
+      <div class="chips">
+        <div class="chip green">外資 +514萬</div>
+        <div class="chip green">投信 +200萬</div>
+      </div>
+    </div>
+    <div class="d-col">
+      <div class="d-label">基本面</div>
+      <div class="chips"></div>
+    </div>
+  </div>
+  <div class="d-label mt8">走勢情境</div>
+  <div class="scenarios"><div class="sc-row up">① 若守住 15 支撐 → 有機會嘗試挑戰 17 壓力區</div><div class="sc-row dn">② 若跌破 15 → 下一支撐看 13，中期趨勢可能轉弱</div></div>
+  <div class="d-label mt8">觀察重點</div>
+  <ul class="obs"><li>近 3 天能否站回 20 日均線（15）</li><li>支撐區 15 是否守住</li><li>外資連續買超是否改變方向</li></ul>
+</div>
+</div><div class="card" data-sid="0056" data-name="元大高股息" data-light="🔴">
+  <div class="card-top">
+    <div class="ct-left">
+      <span class="light light-bear">▼</span>
+      <div class="name-row">
+        <span class="type-etf">ETF</span><span class="sid">0056</span><span class="sname">元大高股息</span>
+        <span class="rec-badge rec-sell">建議賣出</span>
+      </div>
+      <div class="conclusion">跌破中期均線，中期趨勢轉弱，宜觀望為主。</div>
+      <div class="top-sig sig-neg">📉 跌破 20 日均線</div>
+    </div>
+    <div class="ct-right">
+      <div class="close-price">52.4</div>
+      <div class="chg-val dn">-1.51%</div>
+      <div class="toggle-btn">詳情<span class="toggle-icon">＋</span></div>
+    </div>
+  </div>
+  <div class="pbar">
+  <div class="pbar-track"><div class="pbar-fill" style="width:45%"></div>
+    <div class="pbar-dot" style="left:calc(45% - 5px)"></div></div>
+  <div class="pbar-labels">
+    <span>⛔47.4</span><span>🔻50.8</span>
+    <span class="cur">▲52.4</span><span>🔺58.4</span>
+  </div>
+</div>
+  <div class="detail">
+  <div class="d-row">
+    <div class="d-col">
+      <div class="d-label">均線</div>
+      <div class="chips">
+        <div class="chip">MA5 51.9</div>
+        <div class="chip">MA20 54.8</div>
+        <div class="chip">MA60 54.2</div>
+        <div class="chip">↘下彎</div>
+      </div>
+    </div>
+    <div class="d-col">
+      <div class="d-label">動能</div>
+      <div class="chips">
+        <div class="chip">KD 50/40</div>
+        <div class="chip">RSI 34</div>
+        <div class="chip">布↑59.3</div>
+        <div class="chip">布↓50.2</div>
+      </div>
+    </div>
+  </div>
+  <div class="d-row">
+    <div class="d-col">
+      <div class="d-label">法人 5 日</div>
+      <div class="chips">
+        <div class="chip red">外資 -1350萬</div>
+        <div class="chip green">投信 +479萬</div>
+      </div>
+    </div>
+    <div class="d-col">
+      <div class="d-label">基本面</div>
+      <div class="chips"></div>
+    </div>
+  </div>
+  <div class="d-label mt8">走勢情境</div>
+  <div class="scenarios"><div class="sc-row up">① 若守住 51 支撐 → 有機會嘗試挑戰 58 壓力區</div><div class="sc-row dn">② 若跌破 51 → 下一支撐看 47，中期趨勢可能轉弱</div></div>
+  <div class="d-label mt8">觀察重點</div>
+  <ul class="obs"><li>近 3 天能否站回 20 日均線（55）</li><li>支撐區 51 是否守住</li><li>外資連續賣超是否改變方向</li></ul>
+</div>
+</div><div class="card" data-sid="00878" data-name="國泰永續高股息" data-light="🔴">
+  <div class="card-top">
+    <div class="ct-left">
+      <span class="light light-bear">▼</span>
+      <div class="name-row">
+        <span class="type-etf">ETF</span><span class="sid">00878</span><span class="sname">國泰永續高股息</span>
+        <span class="rec-badge rec-sell">建議賣出</span>
+      </div>
+      <div class="conclusion">跌破中期均線，中期趨勢轉弱，宜觀望為主。</div>
+      <div class="top-sig sig-neg">📉 跌破 20 日均線</div>
+    </div>
+    <div class="ct-right">
+      <div class="close-price">33.0</div>
+      <div class="chg-val dn">-1.49%</div>
+      <div class="toggle-btn">詳情<span class="toggle-icon">＋</span></div>
+    </div>
+  </div>
+  <div class="pbar">
+  <div class="pbar-track"><div class="pbar-fill" style="width:44%"></div>
+    <div class="pbar-dot" style="left:calc(44% - 5px)"></div></div>
+  <div class="pbar-labels">
+    <span>⛔30.5</span><span>🔻32.3</span>
+    <span class="cur">▲33.0</span><span>🔺36.2</span>
+  </div>
+</div>
+  <div class="detail">
+  <div class="d-row">
+    <div class="d-col">
+      <div class="d-label">均線</div>
+      <div class="chips">
+        <div class="chip">MA5 32.8</div>
+        <div class="chip">MA20 34.4</div>
+        <div class="chip">MA60 34.2</div>
+        <div class="chip">↘下彎</div>
+      </div>
+    </div>
+    <div class="d-col">
+      <div class="d-label">動能</div>
+      <div class="chips">
+        <div class="chip">KD 50/41</div>
+        <div class="chip">RSI 31</div>
+        <div class="chip">布↑36.6</div>
+        <div class="chip">布↓32.1</div>
+      </div>
+    </div>
+  </div>
+  <div class="d-row">
+    <div class="d-col">
+      <div class="d-label">法人 5 日</div>
+      <div class="chips">
+        <div class="chip red">外資 -2753萬</div>
+        <div class="chip green">投信 +400萬</div>
+      </div>
+    </div>
+    <div class="d-col">
+      <div class="d-label">基本面</div>
+      <div class="chips"></div>
+    </div>
+  </div>
+  <div class="d-label mt8">走勢情境</div>
+  <div class="scenarios"><div class="sc-row up">① 若守住 32 支撐 → 有機會嘗試挑戰 36 壓力區</div><div class="sc-row dn">② 若跌破 32 → 下一支撐看 30，中期趨勢可能轉弱</div></div>
+  <div class="d-label mt8">觀察重點</div>
+  <ul class="obs"><li>近 3 天能否站回 20 日均線（34）</li><li>支撐區 32 是否守住</li><li>外資連續賣超是否改變方向</li></ul>
+</div>
+</div><div class="card" data-sid="00919" data-name="群益台灣精選高息" data-light="🔴">
+  <div class="card-top">
+    <div class="ct-left">
+      <span class="light light-bear">▼</span>
+      <div class="name-row">
+        <span class="type-etf">ETF</span><span class="sid">00919</span><span class="sname">群益台灣精選高息</span>
+        <span class="rec-badge rec-sell">建議賣出</span>
+      </div>
+      <div class="conclusion">跌破中期均線，中期趨勢轉弱，宜觀望為主。</div>
+      <div class="top-sig sig-neg">📉 跌破 20 日均線</div>
+    </div>
+    <div class="ct-right">
+      <div class="close-price">30.9</div>
+      <div class="chg-val dn">-0.86%</div>
+      <div class="toggle-btn">詳情<span class="toggle-icon">＋</span></div>
+    </div>
+  </div>
+  <div class="pbar">
+  <div class="pbar-track"><div class="pbar-fill" style="width:49%"></div>
+    <div class="pbar-dot" style="left:calc(49% - 5px)"></div></div>
+  <div class="pbar-labels">
+    <span>⛔28.6</span><span>🔻30.1</span>
+    <span class="cur">▲30.9</span><span>🔺33.4</span>
+  </div>
+</div>
+  <div class="detail">
+  <div class="d-row">
+    <div class="d-col">
+      <div class="d-label">均線</div>
+      <div class="chips">
+        <div class="chip">MA5 30.8</div>
+        <div class="chip">MA20 31.9</div>
+        <div class="chip">MA60 31.5</div>
+        <div class="chip">↘下彎</div>
+      </div>
+    </div>
+    <div class="d-col">
+      <div class="d-label">動能</div>
+      <div class="chips">
+        <div class="chip">KD 52/45</div>
+        <div class="chip">RSI 34</div>
+        <div class="chip">布↑33.6</div>
+        <div class="chip">布↓30.3</div>
+      </div>
+    </div>
+  </div>
+  <div class="d-row">
+    <div class="d-col">
+      <div class="d-label">法人 5 日</div>
+      <div class="chips">
+        <div class="chip red">外資 -2163萬</div>
+        <div class="chip red">投信 —</div>
+      </div>
+    </div>
+    <div class="d-col">
+      <div class="d-label">基本面</div>
+      <div class="chips"></div>
+    </div>
+  </div>
+  <div class="d-label mt8">走勢情境</div>
+  <div class="scenarios"><div class="sc-row up">① 若守住 30 支撐 → 有機會嘗試挑戰 33 壓力區</div><div class="sc-row dn">② 若跌破 30 → 下一支撐看 29，中期趨勢可能轉弱</div></div>
+  <div class="d-label mt8">觀察重點</div>
+  <ul class="obs"><li>近 3 天能否站回 20 日均線（32）</li><li>支撐區 30 是否守住</li><li>外資連續賣超是否改變方向</li></ul>
+</div>
+</div><div class="card" data-sid="00406A" data-name="主動中信台灣收益" data-light="🔴">
+  <div class="card-top">
+    <div class="ct-left">
+      <span class="light light-bear">▼</span>
+      <div class="name-row">
+        <span class="type-etf">ETF</span><span class="sid">00406A</span><span class="sname">主動中信台灣收益</span>
+        <span class="rec-badge rec-sell">建議賣出</span>
+      </div>
+      <div class="conclusion">跌破中期均線，中期趨勢轉弱，宜觀望為主。</div>
+      <div class="top-sig sig-neg">📉 跌破 20 日均線</div>
+    </div>
+    <div class="ct-right">
+      <div class="close-price">7.6</div>
+      <div class="chg-val dn">-4.40%</div>
+      <div class="toggle-btn">詳情<span class="toggle-icon">＋</span></div>
+    </div>
+  </div>
+  <div class="pbar">
+  <div class="pbar-track"><div class="pbar-fill" style="width:32%"></div>
+    <div class="pbar-dot" style="left:calc(32% - 5px)"></div></div>
+  <div class="pbar-labels">
+    <span>⛔6.6</span><span>🔻7.9</span>
+    <span class="cur">▲7.6</span><span>🔺9.7</span>
+  </div>
+</div>
+  <div class="detail">
+  <div class="d-row">
+    <div class="d-col">
+      <div class="d-label">均線</div>
+      <div class="chips">
+        <div class="chip">MA5 7.5</div>
+        <div class="chip">MA20 8.4</div>
+        <div class="chip">MA60 9.1</div>
+        <div class="chip">↘下彎</div>
+      </div>
+    </div>
+    <div class="d-col">
+      <div class="d-label">動能</div>
+      <div class="chips">
+        <div class="chip">KD 43/31</div>
+        <div class="chip">RSI 34</div>
+        <div class="chip">布↑9.8</div>
+        <div class="chip">布↓6.9</div>
+      </div>
+    </div>
+  </div>
+  <div class="d-row">
+    <div class="d-col">
+      <div class="d-label">法人 5 日</div>
+      <div class="chips">
+        <div class="chip green">外資 +1.7億</div>
+        <div class="chip red">投信 —</div>
+      </div>
+    </div>
+    <div class="d-col">
+      <div class="d-label">基本面</div>
+      <div class="chips"></div>
+    </div>
+  </div>
+  <div class="d-label mt8">走勢情境</div>
+  <div class="scenarios"><div class="sc-row up">① 若守住 8 支撐 → 有機會嘗試挑戰 10 壓力區</div><div class="sc-row dn">② 若跌破 8 → 下一支撐看 7，中期趨勢可能轉弱</div></div>
+  <div class="d-label mt8">觀察重點</div>
+  <ul class="obs"><li>近 3 天能否站回 20 日均線（8）</li><li>支撐區 8 是否守住</li><li>外資連續買超是否改變方向</li></ul>
+</div>
+</div><div class="card" data-sid="00400A" data-name="主動國泰動能高息" data-light="🔴">
+  <div class="card-top">
+    <div class="ct-left">
+      <span class="light light-bear">▼</span>
+      <div class="name-row">
+        <span class="type-etf">ETF</span><span class="sid">00400A</span><span class="sname">主動國泰動能高息</span>
+        <span class="rec-badge rec-sell">建議賣出</span>
+      </div>
+      <div class="conclusion">跌破中期均線，中期趨勢轉弱，宜觀望為主。</div>
+      <div class="top-sig sig-neg">📉 跌破 20 日均線</div>
+    </div>
+    <div class="ct-right">
+      <div class="close-price">12.6</div>
+      <div class="chg-val dn">-3.23%</div>
+      <div class="toggle-btn">詳情<span class="toggle-icon">＋</span></div>
+    </div>
+  </div>
+  <div class="pbar">
+  <div class="pbar-track"><div class="pbar-fill" style="width:38%"></div>
+    <div class="pbar-dot" style="left:calc(38% - 5px)"></div></div>
+  <div class="pbar-labels">
+    <span>⛔10.8</span><span>🔻12.6</span>
+    <span class="cur">▲12.6</span><span>🔺15.4</span>
+  </div>
+</div>
+  <div class="detail">
+  <div class="d-row">
+    <div class="d-col">
+      <div class="d-label">均線</div>
+      <div class="chips">
+        <div class="chip">MA5 12.2</div>
+        <div class="chip">MA20 13.5</div>
+        <div class="chip">MA60 14.5</div>
+        <div class="chip">↘下彎</div>
+      </div>
+    </div>
+    <div class="d-col">
+      <div class="d-label">動能</div>
+      <div class="chips">
+        <div class="chip">KD 48/34</div>
+        <div class="chip">RSI 37</div>
+        <div class="chip">布↑15.8</div>
+        <div class="chip">布↓11.3</div>
+      </div>
+    </div>
+  </div>
+  <div class="d-row">
+    <div class="d-col">
+      <div class="d-label">法人 5 日</div>
+      <div class="chips">
+        <div class="chip green">外資 +2010萬</div>
+        <div class="chip red">投信 —</div>
+      </div>
+    </div>
+    <div class="d-col">
+      <div class="d-label">基本面</div>
+      <div class="chips"></div>
+    </div>
+  </div>
+  <div class="d-label mt8">走勢情境</div>
+  <div class="scenarios"><div class="sc-row up">① 若守住 13 支撐 → 有機會嘗試挑戰 15 壓力區</div><div class="sc-row dn">② 若跌破 13 → 下一支撐看 11，中期趨勢可能轉弱</div></div>
+  <div class="d-label mt8">觀察重點</div>
+  <ul class="obs"><li>近 3 天能否站回 20 日均線（14）</li><li>支撐區 13 是否守住</li><li>外資連續買超是否改變方向</li></ul>
+</div>
+</div><div class="card" data-sid="00881" data-name="國泰台灣科技龍頭" data-light="🔴">
+  <div class="card-top">
+    <div class="ct-left">
+      <span class="light light-bear">▼</span>
+      <div class="name-row">
+        <span class="type-etf">ETF</span><span class="sid">00881</span><span class="sname">國泰台灣科技龍頭</span>
+        <span class="rec-badge rec-sell">建議賣出</span>
+      </div>
+      <div class="conclusion">跌破中期均線，中期趨勢轉弱，宜觀望為主。</div>
+      <div class="top-sig sig-neg">📉 跌破 20 日均線</div>
+    </div>
+    <div class="ct-right">
+      <div class="close-price">44.0</div>
+      <div class="chg-val dn">-3.23%</div>
+      <div class="toggle-btn">詳情<span class="toggle-icon">＋</span></div>
+    </div>
+  </div>
+  <div class="pbar">
+  <div class="pbar-track"><div class="pbar-fill" style="width:44%"></div>
+    <div class="pbar-dot" style="left:calc(44% - 5px)"></div></div>
+  <div class="pbar-labels">
+    <span>⛔38.1</span><span>🔻43.8</span>
+    <span class="cur">▲44.0</span><span>🔺51.6</span>
+  </div>
+</div>
+  <div class="detail">
+  <div class="d-row">
+    <div class="d-col">
+      <div class="d-label">均線</div>
+      <div class="chips">
+        <div class="chip">MA5 43.2</div>
+        <div class="chip">MA20 46.6</div>
+        <div class="chip">MA60 49.5</div>
+        <div class="chip">↘下彎</div>
+      </div>
+    </div>
+    <div class="d-col">
+      <div class="d-label">動能</div>
+      <div class="chips">
+        <div class="chip">KD 55/38</div>
+        <div class="chip">RSI 37</div>
+        <div class="chip">布↑52.6</div>
+        <div class="chip">布↓40.6</div>
+      </div>
+    </div>
+  </div>
+  <div class="d-row">
+    <div class="d-col">
+      <div class="d-label">法人 5 日</div>
+      <div class="chips">
+        <div class="chip green">外資 +197萬</div>
+        <div class="chip red">投信 —</div>
+      </div>
+    </div>
+    <div class="d-col">
+      <div class="d-label">基本面</div>
+      <div class="chips"></div>
+    </div>
+  </div>
+  <div class="d-label mt8">走勢情境</div>
+  <div class="scenarios"><div class="sc-row up">① 若守住 44 支撐 → 有機會嘗試挑戰 52 壓力區</div><div class="sc-row dn">② 若跌破 44 → 下一支撐看 38，中期趨勢可能轉弱</div></div>
+  <div class="d-label mt8">觀察重點</div>
+  <ul class="obs"><li>近 3 天能否站回 20 日均線（47）</li><li>支撐區 44 是否守住</li><li>外資連續買超是否改變方向</li></ul>
+</div>
+</div><div class="card" data-sid="00927" data-name="群益半導體收益" data-light="🔴">
+  <div class="card-top">
+    <div class="ct-left">
+      <span class="light light-bear">▼</span>
+      <div class="name-row">
+        <span class="type-etf">ETF</span><span class="sid">00927</span><span class="sname">群益半導體收益</span>
+        <span class="rec-badge rec-sell">建議賣出</span>
+      </div>
+      <div class="conclusion">跌破中期均線，中期趨勢轉弱，宜觀望為主。</div>
+      <div class="top-sig sig-neg">📉 跌破 20 日均線</div>
+    </div>
+    <div class="ct-right">
+      <div class="close-price">30.9</div>
+      <div class="chg-val dn">-2.59%</div>
+      <div class="toggle-btn">詳情<span class="toggle-icon">＋</span></div>
+    </div>
+  </div>
+  <div class="pbar">
+  <div class="pbar-track"><div class="pbar-fill" style="width:38%"></div>
+    <div class="pbar-dot" style="left:calc(38% - 5px)"></div></div>
+  <div class="pbar-labels">
+    <span>⛔26.9</span><span>🔻31.0</span>
+    <span class="cur">▲30.9</span><span>🔺37.5</span>
+  </div>
+</div>
+  <div class="detail">
+  <div class="d-row">
+    <div class="d-col">
+      <div class="d-label">均線</div>
+      <div class="chips">
+        <div class="chip">MA5 30.4</div>
+        <div class="chip">MA20 33.3</div>
+        <div class="chip">MA60 35.1</div>
+        <div class="chip">↘下彎</div>
+      </div>
+    </div>
+    <div class="d-col">
+      <div class="d-label">動能</div>
+      <div class="chips">
+        <div class="chip">KD 46/34</div>
+        <div class="chip">RSI 34</div>
+        <div class="chip">布↑38.2</div>
+        <div class="chip">布↓28.5</div>
+      </div>
+    </div>
+  </div>
+  <div class="d-row">
+    <div class="d-col">
+      <div class="d-label">法人 5 日</div>
+      <div class="chips">
+        <div class="chip green">外資 +326萬</div>
+        <div class="chip red">投信 —</div>
+      </div>
+    </div>
+    <div class="d-col">
+      <div class="d-label">基本面</div>
+      <div class="chips"></div>
+    </div>
+  </div>
+  <div class="d-label mt8">走勢情境</div>
+  <div class="scenarios"><div class="sc-row up">① 若守住 31 支撐 → 有機會嘗試挑戰 37 壓力區</div><div class="sc-row dn">② 若跌破 31 → 下一支撐看 27，中期趨勢可能轉弱</div></div>
+  <div class="d-label mt8">觀察重點</div>
+  <ul class="obs"><li>近 3 天能否站回 20 日均線（33）</li><li>支撐區 31 是否守住</li><li>外資連續買超是否改變方向</li></ul>
+</div>
+</div><div class="card" data-sid="00891" data-name="中信關鍵半導體" data-light="🔴">
+  <div class="card-top">
+    <div class="ct-left">
+      <span class="light light-bear">▼</span>
+      <div class="name-row">
+        <span class="type-etf">ETF</span><span class="sid">00891</span><span class="sname">中信關鍵半導體</span>
+        <span class="rec-badge rec-sell">建議賣出</span>
+      </div>
+      <div class="conclusion">跌破中期均線，中期趨勢轉弱，宜觀望為主。</div>
+      <div class="top-sig sig-neg">📉 跌破 20 日均線</div>
+    </div>
+    <div class="ct-right">
+      <div class="close-price">32.0</div>
+      <div class="chg-val dn">-2.53%</div>
+      <div class="toggle-btn">詳情<span class="toggle-icon">＋</span></div>
+    </div>
+  </div>
+  <div class="pbar">
+  <div class="pbar-track"><div class="pbar-fill" style="width:48%"></div>
+    <div class="pbar-dot" style="left:calc(48% - 5px)"></div></div>
+  <div class="pbar-labels">
+    <span>⛔27.4</span><span>🔻31.2</span>
+    <span class="cur">▲32.0</span><span>🔺36.9</span>
+  </div>
+</div>
+  <div class="detail">
+  <div class="d-row">
+    <div class="d-col">
+      <div class="d-label">均線</div>
+      <div class="chips">
+        <div class="chip">MA5 31.2</div>
+        <div class="chip">MA20 33.5</div>
+        <div class="chip">MA60 35.1</div>
+        <div class="chip">↘下彎</div>
+      </div>
+    </div>
+    <div class="d-col">
+      <div class="d-label">動能</div>
+      <div class="chips">
+        <div class="chip">KD 54/39</div>
+        <div class="chip">RSI 40</div>
+        <div class="chip">布↑37.6</div>
+        <div class="chip">布↓29.4</div>
+      </div>
+    </div>
+  </div>
+  <div class="d-row">
+    <div class="d-col">
+      <div class="d-label">法人 5 日</div>
+      <div class="chips">
+        <div class="chip red">外資 -1081萬</div>
+        <div class="chip red">投信 —</div>
+      </div>
+    </div>
+    <div class="d-col">
+      <div class="d-label">基本面</div>
+      <div class="chips"></div>
+    </div>
+  </div>
+  <div class="d-label mt8">走勢情境</div>
+  <div class="scenarios"><div class="sc-row up">① 若守住 31 支撐 → 有機會嘗試挑戰 37 壓力區</div><div class="sc-row dn">② 若跌破 31 → 下一支撐看 27，中期趨勢可能轉弱</div></div>
+  <div class="d-label mt8">觀察重點</div>
+  <ul class="obs"><li>近 3 天能否站回 20 日均線（33）</li><li>支撐區 31 是否守住</li><li>外資連續賣超是否改變方向</li></ul>
+</div>
+</div>
+</div>
+<div id="grp-stock" class="group-label">📈 個股</div>
+<div class="card-grid" id="grid-stock">
+<div class="card changed" data-sid="2317" data-name="鴻海" data-light="🟡">
+  <div class="card-top">
+    <div class="ct-left">
+      <span class="light light-neu">—</span>
+      <div class="name-row">
+        <span class="type-stk">個股</span><span class="sid">2317</span><span class="sname">鴻海</span>
+        <span class="badge-chg">▼→—</span>
+      </div>
+      <div class="conclusion">多空訊號分歧，目前處於整理狀態，等待方向明確。</div>
+      <div class="top-sig sig-neg">📉 跌破 20 日均線</div>
+    </div>
+    <div class="ct-right">
+      <div class="close-price">240.0</div>
+      <div class="chg-val dn">-0.83%</div>
+      <div class="toggle-btn">詳情<span class="toggle-icon">＋</span></div>
+    </div>
+  </div>
+  <div class="pbar">
+  <div class="pbar-track"><div class="pbar-fill" style="width:66%"></div>
+    <div class="pbar-dot" style="left:calc(66% - 5px)"></div></div>
+  <div class="pbar-labels">
+    <span>⛔212.5</span><span>🔻230.0</span>
+    <span class="cur">▲240.0</span><span>🔺254.3</span>
+  </div>
+</div>
+  <div class="detail">
+  <div class="d-row">
+    <div class="d-col">
+      <div class="d-label">均線</div>
+      <div class="chips">
+        <div class="chip">MA5 237.4</div>
+        <div class="chip">MA20 242.8</div>
+        <div class="chip">MA60 247.5</div>
+        <div class="chip">↘下彎</div>
+      </div>
+    </div>
+    <div class="d-col">
+      <div class="d-label">動能</div>
+      <div class="chips">
+        <div class="chip">KD 63/55</div>
+        <div class="chip">RSI 46</div>
+        <div class="chip">布↑255.1</div>
+        <div class="chip">布↓230.4</div>
+      </div>
+    </div>
+  </div>
+  <div class="d-row">
+    <div class="d-col">
+      <div class="d-label">法人 5 日</div>
+      <div class="chips">
+        <div class="chip red">外資 -148萬</div>
+        <div class="chip green">投信 +794萬</div>
+      </div>
+    </div>
+    <div class="d-col">
+      <div class="d-label">基本面</div>
+      <div class="chips"><div class="chip green">收入 +40.8%</div><div class="chip">殖利率 3.0%</div></div>
+    </div>
+  </div>
+  <div class="d-label mt8">走勢情境</div>
+  <div class="scenarios"><div class="sc-row up">① 若守住 230 支撐 → 有機會嘗試挑戰 254 壓力區</div><div class="sc-row dn">② 若跌破 230 → 下一支撐看 212，中期趨勢可能轉弱</div></div>
+  <div class="d-label mt8">觀察重點</div>
+  <ul class="obs"><li>近 3 天能否站回 20 日均線（243）</li><li>支撐區 230 是否守住</li><li>外資連續賣超是否改變方向</li></ul>
+</div>
+</div><div class="card changed" data-sid="2330" data-name="台積電" data-light="🔴">
+  <div class="card-top">
+    <div class="ct-left">
+      <span class="light light-bear">▼</span>
+      <div class="name-row">
+        <span class="type-stk">個股</span><span class="sid">2330</span><span class="sname">台積電</span>
+        <span class="badge-chg">—→▼</span><span class="rec-badge rec-sell">建議賣出</span>
+      </div>
+      <div class="conclusion">跌破中期均線，中期趨勢轉弱，宜觀望為主。</div>
+      <div class="top-sig sig-neg">📉 跌破 20 日均線</div>
+    </div>
+    <div class="ct-right">
+      <div class="close-price">2,340.0</div>
+      <div class="chg-val dn">-2.30%</div>
+      <div class="toggle-btn">詳情<span class="toggle-icon">＋</span></div>
+    </div>
+  </div>
+  <div class="pbar">
+  <div class="pbar-track"><div class="pbar-fill" style="width:69%"></div>
+    <div class="pbar-dot" style="left:calc(69% - 5px)"></div></div>
+  <div class="pbar-labels">
+    <span>⛔2,020.0</span><span>🔻2,216.6</span>
+    <span class="cur">▲2,340.0</span><span>🔺2,482.9</span>
+  </div>
+</div>
+  <div class="detail">
+  <div class="d-row">
+    <div class="d-col">
+      <div class="d-label">均線</div>
+      <div class="chips">
+        <div class="chip">MA5 2,278.0</div>
+        <div class="chip">MA20 2,350.0</div>
+        <div class="chip">MA60 2,413.2</div>
+        <div class="chip">↘下彎</div>
+      </div>
+    </div>
+    <div class="d-col">
+      <div class="d-label">動能</div>
+      <div class="chips">
+        <div class="chip">KD 69/49</div>
+        <div class="chip">RSI 46</div>
+        <div class="chip">布↑2,515.7</div>
+        <div class="chip">布↓2,184.3</div>
+      </div>
+    </div>
+  </div>
+  <div class="d-row">
+    <div class="d-col">
+      <div class="d-label">法人 5 日</div>
+      <div class="chips">
+        <div class="chip red">外資 -3770萬</div>
+        <div class="chip green">投信 +1664萬</div>
+      </div>
+    </div>
+    <div class="d-col">
+      <div class="d-label">基本面</div>
+      <div class="chips"><div class="chip green">收入 +50.9%</div><div class="chip">殖利率 0.9%</div></div>
+    </div>
+  </div>
+  <div class="d-label mt8">走勢情境</div>
+  <div class="scenarios"><div class="sc-row up">① 若守住 2217 支撐 → 有機會嘗試挑戰 2483 壓力區</div><div class="sc-row dn">② 若跌破 2217 → 下一支撐看 2020，中期趨勢可能轉弱</div></div>
+  <div class="d-label mt8">觀察重點</div>
+  <ul class="obs"><li>近 3 天能否站回 20 日均線（2350）</li><li>支撐區 2217 是否守住</li><li>外資連續賣超是否改變方向</li></ul>
+</div>
+</div><div class="card changed" data-sid="2454" data-name="聯發科" data-light="🔴">
+  <div class="card-top">
+    <div class="ct-left">
+      <span class="light light-bear">▼</span>
+      <div class="name-row">
+        <span class="type-stk">個股</span><span class="sid">2454</span><span class="sname">聯發科</span>
+        <span class="badge-chg">—→▼</span><span class="rec-badge rec-sell">建議賣出</span>
+      </div>
+      <div class="conclusion">跌破中期均線，中期趨勢轉弱，宜觀望為主。</div>
+      <div class="top-sig sig-neg">📉 跌破 20 日均線</div>
+    </div>
+    <div class="ct-right">
+      <div class="close-price">3,850.0</div>
+      <div class="chg-val dn">-3.51%</div>
+      <div class="toggle-btn">詳情<span class="toggle-icon">＋</span></div>
+    </div>
+  </div>
+  <div class="pbar">
+  <div class="pbar-track"><div class="pbar-fill" style="width:58%"></div>
+    <div class="pbar-dot" style="left:calc(58% - 5px)"></div></div>
+  <div class="pbar-labels">
+    <span>⛔3,115.0</span><span>🔻3,710.1</span>
+    <span class="cur">▲3,850.0</span><span>🔺4,391.4</span>
+  </div>
+</div>
+  <div class="detail">
+  <div class="d-row">
+    <div class="d-col">
+      <div class="d-label">均線</div>
+      <div class="chips">
+        <div class="chip">MA5 3,757.0</div>
+        <div class="chip">MA20 3,934.5</div>
+        <div class="chip">MA60 4,305.2</div>
+        <div class="chip">↘下彎</div>
+      </div>
+    </div>
+    <div class="d-col">
+      <div class="d-label">動能</div>
+      <div class="chips">
+        <div class="chip">KD 63/47</div>
+        <div class="chip">RSI 46</div>
+        <div class="chip">布↑4,422.9</div>
+        <div class="chip">布↓3,446.1</div>
+      </div>
+    </div>
+  </div>
+  <div class="d-row">
+    <div class="d-col">
+      <div class="d-label">法人 5 日</div>
+      <div class="chips">
+        <div class="chip red">外資 -785萬</div>
+        <div class="chip green">投信 +313萬</div>
+      </div>
+    </div>
+    <div class="d-col">
+      <div class="d-label">基本面</div>
+      <div class="chips"><div class="chip green">收入 +18.3%</div><div class="chip">殖利率 1.3%</div></div>
+    </div>
+  </div>
+  <div class="d-label mt8">走勢情境</div>
+  <div class="scenarios"><div class="sc-row up">① 若守住 3710 支撐 → 有機會嘗試挑戰 4391 壓力區</div><div class="sc-row dn">② 若跌破 3710 → 下一支撐看 3115，中期趨勢可能轉弱</div></div>
+  <div class="d-label mt8">觀察重點</div>
+  <ul class="obs"><li>近 3 天能否站回 20 日均線（3934）</li><li>支撐區 3710 是否守住</li><li>外資連續賣超是否改變方向</li></ul>
+</div>
+</div><div class="card" data-sid="2891" data-name="中信金" data-light="🟢">
+  <div class="card-top">
+    <div class="ct-left">
+      <span class="light light-bull">▲</span>
+      <div class="name-row">
+        <span class="type-stk">個股</span><span class="sid">2891</span><span class="sname">中信金</span>
+        <span class="rec-badge rec-buy">可買進</span>
+      </div>
+      <div class="conclusion">多項指標偏強，均線向上，趨勢明確，但留意追高風險。</div>
+      <div class="top-sig sig-pos">📈 站上 20 日均線</div>
+    </div>
+    <div class="ct-right">
+      <div class="close-price">75.4</div>
+      <div class="chg-val up">+0.94%</div>
+      <div class="toggle-btn">詳情<span class="toggle-icon">＋</span></div>
+    </div>
+  </div>
+  <div class="pbar">
+  <div class="pbar-track"><div class="pbar-fill" style="width:91%"></div>
+    <div class="pbar-dot" style="left:calc(91% - 5px)"></div></div>
+  <div class="pbar-labels">
+    <span>⛔62.1</span><span>🔻68.6</span>
+    <span class="cur">▲75.4</span><span>🔺76.7</span>
+  </div>
+</div>
+  <div class="detail">
+  <div class="d-row">
+    <div class="d-col">
+      <div class="d-label">均線</div>
+      <div class="chips">
+        <div class="chip">MA5 74.6</div>
+        <div class="chip">MA20 74.3</div>
+        <div class="chip">MA60 69.8</div>
+        <div class="chip">↗上彎</div>
+      </div>
+    </div>
+    <div class="d-col">
+      <div class="d-label">動能</div>
+      <div class="chips">
+        <div class="chip">KD 78/71</div>
+        <div class="chip">RSI 52</div>
+        <div class="chip">布↑76.5</div>
+        <div class="chip">布↓72.2</div>
+      </div>
+    </div>
+  </div>
+  <div class="d-row">
+    <div class="d-col">
+      <div class="d-label">法人 5 日</div>
+      <div class="chips">
+        <div class="chip red">外資 -3150萬</div>
+        <div class="chip green">投信 +4674萬</div>
+      </div>
+    </div>
+    <div class="d-col">
+      <div class="d-label">基本面</div>
+      <div class="chips"><div class="chip red">收入 -20.2%</div><div class="chip">殖利率 3.4%</div></div>
+    </div>
+  </div>
+  <div class="d-label mt8">走勢情境</div>
+  <div class="scenarios"><div class="sc-row up">① 若守住 69 支撐 → 有機會嘗試挑戰 77 壓力區</div><div class="sc-row dn">② 若跌破 69 → 下一支撐看 62，中期趨勢可能轉弱</div></div>
+  <div class="d-label mt8">觀察重點</div>
+  <ul class="obs"><li>20 日均線（74）能否持續支撐</li><li>支撐區 69 是否守住</li><li>KD 偏高（78），觀察是否出現死叉</li></ul>
+</div>
+</div><div class="card" data-sid="2884" data-name="玉山金" data-light="🟢">
+  <div class="card-top">
+    <div class="ct-left">
+      <span class="light light-bull">▲</span>
+      <div class="name-row">
+        <span class="type-stk">個股</span><span class="sid">2884</span><span class="sname">玉山金</span>
+        <span class="rec-badge rec-buy">可買進</span>
+      </div>
+      <div class="conclusion">多項指標偏強，均線向上，趨勢明確，但留意追高風險。</div>
+      <div class="top-sig sig-neg">📉 跌破 20 日均線</div>
+    </div>
+    <div class="ct-right">
+      <div class="close-price">47.2</div>
+      <div class="chg-val dn">-0.84%</div>
+      <div class="toggle-btn">詳情<span class="toggle-icon">＋</span></div>
+    </div>
+  </div>
+  <div class="pbar">
+  <div class="pbar-track"><div class="pbar-fill" style="width:78%"></div>
+    <div class="pbar-dot" style="left:calc(78% - 5px)"></div></div>
+  <div class="pbar-labels">
+    <span>⛔36.6</span><span>🔻44.7</span>
+    <span class="cur">▲47.2</span><span>🔺50.2</span>
+  </div>
+</div>
+  <div class="detail">
+  <div class="d-row">
+    <div class="d-col">
+      <div class="d-label">均線</div>
+      <div class="chips">
+        <div class="chip">MA5 47.2</div>
+        <div class="chip">MA20 48.4</div>
+        <div class="chip">MA60 45.0</div>
+        <div class="chip">↗上彎</div>
+      </div>
+    </div>
+    <div class="d-col">
+      <div class="d-label">動能</div>
+      <div class="chips">
+        <div class="chip">KD 53/49</div>
+        <div class="chip">RSI 32</div>
+        <div class="chip">布↑50.3</div>
+        <div class="chip">布↓46.5</div>
+      </div>
+    </div>
+  </div>
+  <div class="d-row">
+    <div class="d-col">
+      <div class="d-label">法人 5 日</div>
+      <div class="chips">
+        <div class="chip green">外資 +954萬</div>
+        <div class="chip red">投信 -1487萬</div>
+      </div>
+    </div>
+    <div class="d-col">
+      <div class="d-label">基本面</div>
+      <div class="chips"><div class="chip green">收入 +34.4%</div><div class="chip">殖利率 2.9%</div></div>
+    </div>
+  </div>
+  <div class="d-label mt8">走勢情境</div>
+  <div class="scenarios"><div class="sc-row up">① 若守住 45 支撐 → 有機會嘗試挑戰 50 壓力區</div><div class="sc-row dn">② 若跌破 45 → 下一支撐看 37，中期趨勢可能轉弱</div></div>
+  <div class="d-label mt8">觀察重點</div>
+  <ul class="obs"><li>近 3 天能否站回 20 日均線（48）</li><li>支撐區 45 是否守住</li><li>外資連續買超是否改變方向</li></ul>
+</div>
+</div><div class="card" data-sid="2412" data-name="中華電" data-light="🟢">
+  <div class="card-top">
+    <div class="ct-left">
+      <span class="light light-bull">▲</span>
+      <div class="name-row">
+        <span class="type-stk">個股</span><span class="sid">2412</span><span class="sname">中華電</span>
+        <span class="rec-badge rec-buy">可買進</span>
+      </div>
+      <div class="conclusion">多項指標偏強，均線向上，趨勢明確，但留意追高風險。</div>
+      <div class="top-sig sig-pos">📈 站上 20 日均線</div>
+    </div>
+    <div class="ct-right">
+      <div class="close-price">162.0</div>
+      <div class="chg-val up">+0.62%</div>
+      <div class="toggle-btn">詳情<span class="toggle-icon">＋</span></div>
+    </div>
+  </div>
+  <div class="pbar">
+  <div class="pbar-track"><div class="pbar-fill" style="width:89%"></div>
+    <div class="pbar-dot" style="left:calc(89% - 5px)"></div></div>
+  <div class="pbar-labels">
+    <span>⛔135.0</span><span>🔻147.9</span>
+    <span class="cur">▲162.0</span><span>🔺165.5</span>
+  </div>
+</div>
+  <div class="detail">
+  <div class="d-row">
+    <div class="d-col">
+      <div class="d-label">均線</div>
+      <div class="chips">
+        <div class="chip">MA5 161.0</div>
+        <div class="chip">MA20 158.2</div>
+        <div class="chip">MA60 146.9</div>
+        <div class="chip">↗上彎</div>
+      </div>
+    </div>
+    <div class="d-col">
+      <div class="d-label">動能</div>
+      <div class="chips">
+        <div class="chip">KD 52/58</div>
+        <div class="chip">RSI 61</div>
+        <div class="chip">布↑164.5</div>
+        <div class="chip">布↓151.9</div>
+      </div>
+    </div>
+  </div>
+  <div class="d-row">
+    <div class="d-col">
+      <div class="d-label">法人 5 日</div>
+      <div class="chips">
+        <div class="chip green">外資 +1516萬</div>
+        <div class="chip red">投信 -398萬</div>
+      </div>
+    </div>
+    <div class="d-col">
+      <div class="d-label">基本面</div>
+      <div class="chips"><div class="chip green">收入 +16.7%</div><div class="chip">殖利率 3.2%</div></div>
+    </div>
+  </div>
+  <div class="d-label mt8">走勢情境</div>
+  <div class="scenarios"><div class="sc-row up">① 若守住 148 支撐 → 有機會嘗試挑戰 165 壓力區</div><div class="sc-row dn">② 若跌破 148 → 下一支撐看 135，中期趨勢可能轉弱</div></div>
+  <div class="d-label mt8">觀察重點</div>
+  <ul class="obs"><li>20 日均線（158）能否持續支撐</li><li>支撐區 148 是否守住</li><li>外資連續買超是否改變方向</li></ul>
+</div>
+</div><div class="card" data-sid="2881" data-name="富邦金" data-light="🟡">
+  <div class="card-top">
+    <div class="ct-left">
+      <span class="light light-neu">—</span>
+      <div class="name-row">
+        <span class="type-stk">個股</span><span class="sid">2881</span><span class="sname">富邦金</span>
+        
+      </div>
+      <div class="conclusion">短線站上均線，但訊號分歧，需更多確認方向。</div>
+      <div class="top-sig sig-pos">📈 站上 20 日均線</div>
+    </div>
+    <div class="ct-right">
+      <div class="close-price">159.0</div>
+      <div class="chg-val dn">-0.31%</div>
+      <div class="toggle-btn">詳情<span class="toggle-icon">＋</span></div>
+    </div>
+  </div>
+  <div class="pbar">
+  <div class="pbar-track"><div class="pbar-fill" style="width:86%"></div>
+    <div class="pbar-dot" style="left:calc(86% - 5px)"></div></div>
+  <div class="pbar-labels">
+    <span>⛔123.5</span><span>🔻145.3</span>
+    <span class="cur">▲159.0</span><span>🔺164.8</span>
+  </div>
+</div>
+  <div class="detail">
+  <div class="d-row">
+    <div class="d-col">
+      <div class="d-label">均線</div>
+      <div class="chips">
+        <div class="chip">MA5 154.6</div>
+        <div class="chip">MA20 157.6</div>
+        <div class="chip">MA60 150.6</div>
+        <div class="chip">↘下彎</div>
+      </div>
+    </div>
+    <div class="d-col">
+      <div class="d-label">動能</div>
+      <div class="chips">
+        <div class="chip">KD 67/55</div>
+        <div class="chip">RSI 51</div>
+        <div class="chip">布↑165.1</div>
+        <div class="chip">布↓150.0</div>
+      </div>
+    </div>
+  </div>
+  <div class="d-row">
+    <div class="d-col">
+      <div class="d-label">法人 5 日</div>
+      <div class="chips">
+        <div class="chip red">外資 -343萬</div>
+        <div class="chip green">投信 +851萬</div>
+      </div>
+    </div>
+    <div class="d-col">
+      <div class="d-label">基本面</div>
+      <div class="chips"><div class="chip red">收入 -25.4%</div><div class="chip">殖利率 2.7%</div></div>
+    </div>
+  </div>
+  <div class="d-label mt8">走勢情境</div>
+  <div class="scenarios"><div class="sc-row up">① 若守住 145 支撐 → 有機會嘗試挑戰 165 壓力區</div><div class="sc-row dn">② 若跌破 145 → 下一支撐看 124，中期趨勢可能轉弱</div></div>
+  <div class="d-label mt8">觀察重點</div>
+  <ul class="obs"><li>20 日均線（158）能否持續支撐</li><li>支撐區 145 是否守住</li><li>外資連續賣超是否改變方向</li></ul>
+</div>
+</div><div class="card" data-sid="2308" data-name="台達電" data-light="🔴">
+  <div class="card-top">
+    <div class="ct-left">
+      <span class="light light-bear">▼</span>
+      <div class="name-row">
+        <span class="type-stk">個股</span><span class="sid">2308</span><span class="sname">台達電</span>
+        <span class="rec-badge rec-sell">建議賣出</span>
+      </div>
+      <div class="conclusion">跌破中期均線，中期趨勢轉弱，宜觀望為主。</div>
+      <div class="top-sig sig-neg">📉 跌破 20 日均線</div>
+    </div>
+    <div class="ct-right">
+      <div class="close-price">1,240.0</div>
+      <div class="chg-val dn">-4.25%</div>
+      <div class="toggle-btn">詳情<span class="toggle-icon">＋</span></div>
+    </div>
+  </div>
+  <div class="pbar">
+  <div class="pbar-track"><div class="pbar-fill" style="width:30%"></div>
+    <div class="pbar-dot" style="left:calc(30% - 5px)"></div></div>
+  <div class="pbar-labels">
+    <span>⛔1,020.0</span><span>🔻1,348.7</span>
+    <span class="cur">▲1,240.0</span><span>🔺1,746.2</span>
+  </div>
+</div>
+  <div class="detail">
+  <div class="d-row">
+    <div class="d-col">
+      <div class="d-label">均線</div>
+      <div class="chips">
+        <div class="chip">MA5 1,205.0</div>
+        <div class="chip">MA20 1,406.5</div>
+        <div class="chip">MA60 1,677.4</div>
+        <div class="chip">↘下彎</div>
+      </div>
+    </div>
+    <div class="d-col">
+      <div class="d-label">動能</div>
+      <div class="chips">
+        <div class="chip">KD 49/33</div>
+        <div class="chip">RSI 33</div>
+        <div class="chip">布↑1,792.3</div>
+        <div class="chip">布↓1,020.7</div>
+      </div>
+    </div>
+  </div>
+  <div class="d-row">
+    <div class="d-col">
+      <div class="d-label">法人 5 日</div>
+      <div class="chips">
+        <div class="chip red">外資 -1083萬</div>
+        <div class="chip green">投信 +161萬</div>
+      </div>
+    </div>
+    <div class="d-col">
+      <div class="d-label">基本面</div>
+      <div class="chips"><div class="chip green">收入 +31.1%</div><div class="chip">殖利率 0.9%</div></div>
+    </div>
+  </div>
+  <div class="d-label mt8">走勢情境</div>
+  <div class="scenarios"><div class="sc-row up">① 若守住 1349 支撐 → 有機會嘗試挑戰 1746 壓力區</div><div class="sc-row dn">② 若跌破 1349 → 下一支撐看 1020，中期趨勢可能轉弱</div></div>
+  <div class="d-label mt8">觀察重點</div>
+  <ul class="obs"><li>近 3 天能否站回 20 日均線（1406）</li><li>支撐區 1349 是否守住</li><li>外資連續賣超是否改變方向</li></ul>
+</div>
+</div><div class="card" data-sid="2303" data-name="聯電" data-light="🔴">
+  <div class="card-top">
+    <div class="ct-left">
+      <span class="light light-bear">▼</span>
+      <div class="name-row">
+        <span class="type-stk">個股</span><span class="sid">2303</span><span class="sname">聯電</span>
+        <span class="rec-badge rec-sell">建議賣出</span>
+      </div>
+      <div class="conclusion">跌破中期均線，中期趨勢轉弱，宜觀望為主。</div>
+      <div class="top-sig sig-neg">📉 跌破 20 日均線</div>
+    </div>
+    <div class="ct-right">
+      <div class="close-price">101.0</div>
+      <div class="chg-val dn">-2.88%</div>
+      <div class="toggle-btn">詳情<span class="toggle-icon">＋</span></div>
+    </div>
+  </div>
+  <div class="pbar">
+  <div class="pbar-track"><div class="pbar-fill" style="width:24%"></div>
+    <div class="pbar-dot" style="left:calc(24% - 5px)"></div></div>
+  <div class="pbar-labels">
+    <span>⛔88.6</span><span>🔻109.8</span>
+    <span class="cur">▲101.0</span><span>🔺139.6</span>
+  </div>
+</div>
+  <div class="detail">
+  <div class="d-row">
+    <div class="d-col">
+      <div class="d-label">均線</div>
+      <div class="chips">
+        <div class="chip">MA5 98.8</div>
+        <div class="chip">MA20 114.6</div>
+        <div class="chip">MA60 131.0</div>
+        <div class="chip">↘下彎</div>
+      </div>
+    </div>
+    <div class="d-col">
+      <div class="d-label">動能</div>
+      <div class="chips">
+        <div class="chip">KD 42/28</div>
+        <div class="chip">RSI 31</div>
+        <div class="chip">布↑142.3</div>
+        <div class="chip">布↓87.0</div>
+      </div>
+    </div>
+  </div>
+  <div class="d-row">
+    <div class="d-col">
+      <div class="d-label">法人 5 日</div>
+      <div class="chips">
+        <div class="chip red">外資 -4486萬</div>
+        <div class="chip red">投信 -238萬</div>
+      </div>
+    </div>
+    <div class="d-col">
+      <div class="d-label">基本面</div>
+      <div class="chips"><div class="chip green">收入 +25.6%</div><div class="chip">殖利率 2.5%</div></div>
+    </div>
+  </div>
+  <div class="d-label mt8">走勢情境</div>
+  <div class="scenarios"><div class="sc-row up">① 若守住 110 支撐 → 有機會嘗試挑戰 140 壓力區</div><div class="sc-row dn">② 若跌破 110 → 下一支撐看 89，中期趨勢可能轉弱</div></div>
+  <div class="d-label mt8">觀察重點</div>
+  <ul class="obs"><li>近 3 天能否站回 20 日均線（115）</li><li>支撐區 110 是否守住</li><li>外資連續賣超是否改變方向</li></ul>
+</div>
+</div><div class="card" data-sid="3711" data-name="日月光投控" data-light="🔴">
+  <div class="card-top">
+    <div class="ct-left">
+      <span class="light light-bear">▼</span>
+      <div class="name-row">
+        <span class="type-stk">個股</span><span class="sid">3711</span><span class="sname">日月光投控</span>
+        <span class="rec-badge rec-sell">建議賣出</span>
+      </div>
+      <div class="conclusion">跌破中期均線，中期趨勢轉弱，宜觀望為主。</div>
+      <div class="top-sig sig-neg">📉 跌破 20 日均線</div>
+    </div>
+    <div class="ct-right">
+      <div class="close-price">586.0</div>
+      <div class="chg-val dn">-5.02%</div>
+      <div class="toggle-btn">詳情<span class="toggle-icon">＋</span></div>
+    </div>
+  </div>
+  <div class="pbar">
+  <div class="pbar-track"><div class="pbar-fill" style="width:35%"></div>
+    <div class="pbar-dot" style="left:calc(35% - 5px)"></div></div>
+  <div class="pbar-labels">
+    <span>⛔515.0</span><span>🔻579.7</span>
+    <span class="cur">▲586.0</span><span>🔺720.0</span>
+  </div>
+</div>
+  <div class="detail">
+  <div class="d-row">
+    <div class="d-col">
+      <div class="d-label">均線</div>
+      <div class="chips">
+        <div class="chip">MA5 579.2</div>
+        <div class="chip">MA20 637.4</div>
+        <div class="chip">MA60 644.5</div>
+        <div class="chip">↘下彎</div>
+      </div>
+    </div>
+    <div class="d-col">
+      <div class="d-label">動能</div>
+      <div class="chips">
+        <div class="chip">KD 39/33</div>
+        <div class="chip">RSI 41</div>
+        <div class="chip">布↑730.9</div>
+        <div class="chip">布↓543.9</div>
+      </div>
+    </div>
+  </div>
+  <div class="d-row">
+    <div class="d-col">
+      <div class="d-label">法人 5 日</div>
+      <div class="chips">
+        <div class="chip red">外資 -2506萬</div>
+        <div class="chip green">投信 +948萬</div>
+      </div>
+    </div>
+    <div class="d-col">
+      <div class="d-label">基本面</div>
+      <div class="chips"><div class="chip green">收入 +44.8%</div><div class="chip">殖利率 1.1%</div></div>
+    </div>
+  </div>
+  <div class="d-label mt8">走勢情境</div>
+  <div class="scenarios"><div class="sc-row up">① 若守住 580 支撐 → 有機會嘗試挑戰 720 壓力區</div><div class="sc-row dn">② 若跌破 580 → 下一支撐看 515，中期趨勢可能轉弱</div></div>
+  <div class="d-label mt8">觀察重點</div>
+  <ul class="obs"><li>近 3 天能否站回 20 日均線（637）</li><li>支撐區 580 是否守住</li><li>外資連續賣超是否改變方向</li></ul>
+</div>
+</div>
+</div>
+<div class="lesson">
+  <div class="lesson-hd">📚 指標小學堂</div>
+  <div class="lesson-title">季度收入年增率</div>
+  <div class="lesson-body">與去年同期比較的收入成長。正成長基本面向好，需連續 2～3 季確認趨勢。</div>
+</div>
+<div class="disc">價位與燈號為指標推算的參考值，不保證走勢，投資請自行判斷。</div>
+<script>
+// 展開/收合（補償捲軸，讓卡片保持在同一視覺位置）
+document.querySelectorAll('.card-top').forEach(el=>{
+  el.addEventListener('click',()=>{
+    const card = el.closest('.card');
+    const before = card.getBoundingClientRect().top;
+    card.classList.toggle('open');
+    requestAnimationFrame(()=>{
+      requestAnimationFrame(()=>{
+        const after = card.getBoundingClientRect().top;
+        window.scrollBy(0, after - before);
+      });
+    });
+  });
+});
+document.querySelectorAll('.card.changed').forEach(c=>c.classList.add('open'));
+
+// 深淺色切換
+(function(){
+  const btn  = document.getElementById('theme-toggle');
+  const html = document.documentElement;
+  function apply(t){
+    html.classList.remove('dark','light');
+    html.classList.add(t);
+    btn.textContent = t==='dark' ? '🌙' : '☀️';
+    localStorage.setItem('theme', t);
+  }
+  btn.addEventListener('click',()=>{
+    apply((localStorage.getItem('theme')||'dark')==='dark' ? 'light' : 'dark');
+  });
+  // 初始圖示同步（class 已由 head script 設好）
+  btn.textContent = (localStorage.getItem('theme')||'dark')==='dark' ? '🌙' : '☀️';
+})();
+
+// 搜尋 + 燈號篩選
+const inp    = document.getElementById('search');
+const clrBtn = document.getElementById('search-clear');
+const noRes  = document.getElementById('no-result');
+const grpE   = document.getElementById('grp-etf');
+const grpS   = document.getElementById('grp-stock');
+let activeLight = null;
+
+function filterCards(){
+  const q = inp.value.trim().toLowerCase();
+  clrBtn.style.display = q ? 'block' : 'none';
+  document.querySelectorAll('.card').forEach(c=>{
+    const matchQ = !q
+      || (c.dataset.sid  ||'').toLowerCase().includes(q)
+      || (c.dataset.name ||'').toLowerCase().includes(q);
+    const matchL = !activeLight || c.dataset.light === activeLight;
+    const match  = matchQ && matchL;
+    c.classList.toggle('hidden', !match);
+    if(match && q) c.classList.add('open');
+  });
+  const anyEtf   = [...document.querySelectorAll('#grid-etf .card')].some(c=>!c.classList.contains('hidden'));
+  const anyStock = [...document.querySelectorAll('#grid-stock .card')].some(c=>!c.classList.contains('hidden'));
+  if(grpE) grpE.classList.toggle('hidden', !anyEtf);
+  if(grpS) grpS.classList.toggle('hidden', !anyStock);
+  document.getElementById('grid-etf').classList.toggle('hidden', !anyEtf);
+  document.getElementById('grid-stock').classList.toggle('hidden', !anyStock);
+  noRes.style.display = (!anyEtf && !anyStock) ? 'block' : 'none';
+}
+
+inp.addEventListener('input', filterCards);
+clrBtn.addEventListener('click',()=>{ inp.value=''; filterCards(); inp.focus(); });
+
+// 燈號篩選鈕
+const LIGHT_MAP = {'hdr-bull':'🟢','hdr-neu':'🟡','hdr-bear':'🔴'};
+document.querySelectorAll('.hdr-bull,.hdr-neu,.hdr-bear').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const cls   = [...btn.classList].find(c=>LIGHT_MAP[c]);
+    const light = LIGHT_MAP[cls];
+    activeLight = (activeLight===light) ? null : light;
+    document.querySelectorAll('.hdr-bull,.hdr-neu,.hdr-bear').forEach(b=>b.classList.remove('active'));
+    if(activeLight) btn.classList.add('active');
+    filterCards();
+  });
+});
+
+// 導航：前一天
+(function(){
+  const d = new Date(window.__REPORT_DATE + 'T00:00:00');
+  const avail = (window.__AVAILABLE_DATES || []);
+
+  function prevTrade(dt){
+    const p = new Date(dt); p.setDate(p.getDate()-1);
+    while(p.getDay()===0||p.getDay()===6) p.setDate(p.getDate()-1);
+    return p;
+  }
+  function fmt(dt){
+    return dt.toISOString().slice(0,10);
+  }
+
+  const prevStr = fmt(prevTrade(d));
+  const btnPrev = document.getElementById('nav-prev');
+
+  if(avail.length && !avail.includes(prevStr)){
+    btnPrev.style.display = 'none';
+  } else {
+    btnPrev.addEventListener('click',()=>{ location.href = prevStr+'.html'; });
+  }
+})();
+</script>
+</body>
+</html>

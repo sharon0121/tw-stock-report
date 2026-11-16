@@ -40,3 +40,9 @@ jobs:
           git diff --cached --quiet || git commit -m "chore: 盤後報告 $(date +%Y-%m-%d)"
           git push
 
+      - name: Notify LINE via AI secretary
+        run: |
+          curl -s -o /dev/null -w "HTTP %{http_code}\n" \
+            "https://line-secretary-iota.vercel.app/api/cron/stock-report" \
+            || echo "LINE notification failed (non-blocking)"
+

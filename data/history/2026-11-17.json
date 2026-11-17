@@ -1,0 +1,1390 @@
+{
+  "date": "2026-11-17",
+  "stocks": {
+    "0050": {
+      "id": "0050",
+      "name": "元大台灣50",
+      "type": "etf",
+      "close": 94.0,
+      "change_pct": -2.54,
+      "ma5": 99.42,
+      "ma20": 102.25,
+      "ma60": 107.12,
+      "ma20_direction": "down",
+      "kd_k": 56.1,
+      "kd_d": 56.8,
+      "rsi": 31.3,
+      "bb_up": 112.12,
+      "bb_low": 92.39,
+      "resistance": 110.66,
+      "support": 97.33,
+      "risk_level": 87.55,
+      "div_yield": null,
+      "per": null,
+      "rev_growth": null,
+      "inst_5d": {
+        "foreign_net": -132841811,
+        "trust_net": 19303000,
+        "total_net": -301161118
+      },
+      "score": -4,
+      "light": "🔴",
+      "signals": [
+        {
+          "key": "below_ma20",
+          "score": -1,
+          "label": "📉 跌破 20 日均線",
+          "desc": "收盤 94.0 < MA20 102，短期買盤變弱"
+        },
+        {
+          "key": "below_ma60",
+          "score": -1,
+          "label": "🔴 跌破 60 日均線",
+          "desc": "收盤 94.0 < MA60 107，中期趨勢轉弱"
+        },
+        {
+          "key": "ma20_down",
+          "score": -1,
+          "label": "↘ 20 日均線下彎",
+          "desc": "均線向下，代表短期動能減弱"
+        },
+        {
+          "key": "inst_sell",
+          "score": -1,
+          "label": "🏃 法人 5 日合計賣超",
+          "desc": "外資+投信合計賣超 301,161,118 股，籌碼偏空"
+        }
+      ],
+      "heat_flag": null,
+      "conclusion": "跌破中期均線，中期趨勢轉弱，宜觀望為主。",
+      "scenarios": [
+        "① 若守住 97 支撐 → 有機會嘗試挑戰 111 壓力區",
+        "② 若跌破 97 → 下一支撐看 88，中期趨勢可能轉弱"
+      ],
+      "observations": [
+        "近 3 天能否站回 20 日均線（102）",
+        "支撐區 97 是否守住",
+        "外資連續賣超是否改變方向"
+      ]
+    },
+    "009816": {
+      "id": "009816",
+      "name": "凱基台灣TOP50",
+      "type": "etf",
+      "close": 14.07,
+      "change_pct": -2.22,
+      "ma5": 14.81,
+      "ma20": 15.25,
+      "ma60": 15.83,
+      "ma20_direction": "down",
+      "kd_k": 53.8,
+      "kd_d": 54.3,
+      "rsi": 30.6,
+      "bb_up": 16.67,
+      "bb_low": 13.83,
+      "resistance": 16.45,
+      "support": 14.51,
+      "risk_level": 13.2,
+      "div_yield": null,
+      "per": null,
+      "rev_growth": null,
+      "inst_5d": {
+        "foreign_net": -2354355,
+        "trust_net": 0,
+        "total_net": -229179665
+      },
+      "score": -4,
+      "light": "🔴",
+      "signals": [
+        {
+          "key": "below_ma20",
+          "score": -1,
+          "label": "📉 跌破 20 日均線",
+          "desc": "收盤 14.07 < MA20 15，短期買盤變弱"
+        },
+        {
+          "key": "below_ma60",
+          "score": -1,
+          "label": "🔴 跌破 60 日均線",
+          "desc": "收盤 14.07 < MA60 16，中期趨勢轉弱"
+        },
+        {
+          "key": "ma20_down",
+          "score": -1,
+          "label": "↘ 20 日均線下彎",
+          "desc": "均線向下，代表短期動能減弱"
+        },
+        {
+          "key": "inst_sell",
+          "score": -1,
+          "label": "🏃 法人 5 日合計賣超",
+          "desc": "外資+投信合計賣超 229,179,665 股，籌碼偏空"
+        }
+      ],
+      "heat_flag": null,
+      "conclusion": "跌破中期均線，中期趨勢轉弱，宜觀望為主。",
+      "scenarios": [
+        "① 若守住 15 支撐 → 有機會嘗試挑戰 16 壓力區",
+        "② 若跌破 15 → 下一支撐看 13，中期趨勢可能轉弱"
+      ],
+      "observations": [
+        "近 3 天能否站回 20 日均線（15）",
+        "支撐區 15 是否守住",
+        "外資連續賣超是否改變方向"
+      ]
+    },
+    "0056": {
+      "id": "0056",
+      "name": "元大高股息",
+      "type": "etf",
+      "close": 49.92,
+      "change_pct": -1.34,
+      "ma5": 51.8,
+      "ma20": 53.94,
+      "ma60": 54.24,
+      "ma20_direction": "down",
+      "kd_k": 48.8,
+      "kd_d": 48.6,
+      "rsi": 25.7,
+      "bb_up": 58.95,
+      "bb_low": 48.93,
+      "resistance": 58.23,
+      "support": 50.82,
+      "risk_level": 47.4,
+      "div_yield": null,
+      "per": null,
+      "rev_growth": null,
+      "inst_5d": {
+        "foreign_net": -29428565,
+        "trust_net": 3663000,
+        "total_net": -115316063
+      },
+      "score": -4,
+      "light": "🔴",
+      "signals": [
+        {
+          "key": "below_ma20",
+          "score": -1,
+          "label": "📉 跌破 20 日均線",
+          "desc": "收盤 49.92 < MA20 54，短期買盤變弱"
+        },
+        {
+          "key": "below_ma60",
+          "score": -1,
+          "label": "🔴 跌破 60 日均線",
+          "desc": "收盤 49.92 < MA60 54，中期趨勢轉弱"
+        },
+        {
+          "key": "ma20_down",
+          "score": -1,
+          "label": "↘ 20 日均線下彎",
+          "desc": "均線向下，代表短期動能減弱"
+        },
+        {
+          "key": "inst_sell",
+          "score": -1,
+          "label": "🏃 法人 5 日合計賣超",
+          "desc": "外資+投信合計賣超 115,316,063 股，籌碼偏空"
+        }
+      ],
+      "heat_flag": "oversold",
+      "conclusion": "技術面短期超跌，若基本面無惡化，可留意反彈機會。",
+      "scenarios": [
+        "① 若守住 51 支撐 → 有機會嘗試挑戰 58 壓力區",
+        "② 若跌破 51 → 下一支撐看 47，中期趨勢可能轉弱"
+      ],
+      "observations": [
+        "近 3 天能否站回 20 日均線（54）",
+        "支撐區 51 是否守住",
+        "外資連續賣超是否改變方向"
+      ]
+    },
+    "00878": {
+      "id": "00878",
+      "name": "國泰永續高股息",
+      "type": "etf",
+      "close": 30.86,
+      "change_pct": -4.84,
+      "ma5": 32.68,
+      "ma20": 33.92,
+      "ma60": 34.17,
+      "ma20_direction": "down",
+      "kd_k": 43.2,
+      "kd_d": 47.6,
+      "rsi": 23.4,
+      "bb_up": 36.63,
+      "bb_low": 31.21,
+      "resistance": 36.19,
+      "support": 32.21,
+      "risk_level": 30.25,
+      "div_yield": null,
+      "per": null,
+      "rev_growth": null,
+      "inst_5d": {
+        "foreign_net": -10291031,
+        "trust_net": 3000000,
+        "total_net": -343079062
+      },
+      "score": -4,
+      "light": "🔴",
+      "signals": [
+        {
+          "key": "below_ma20",
+          "score": -1,
+          "label": "📉 跌破 20 日均線",
+          "desc": "收盤 30.86 < MA20 34，短期買盤變弱"
+        },
+        {
+          "key": "below_ma60",
+          "score": -1,
+          "label": "🔴 跌破 60 日均線",
+          "desc": "收盤 30.86 < MA60 34，中期趨勢轉弱"
+        },
+        {
+          "key": "ma20_down",
+          "score": -1,
+          "label": "↘ 20 日均線下彎",
+          "desc": "均線向下，代表短期動能減弱"
+        },
+        {
+          "key": "inst_sell",
+          "score": -1,
+          "label": "🏃 法人 5 日合計賣超",
+          "desc": "外資+投信合計賣超 343,079,062 股，籌碼偏空"
+        }
+      ],
+      "heat_flag": "oversold",
+      "conclusion": "技術面短期超跌，若基本面無惡化，可留意反彈機會。",
+      "scenarios": [
+        "① 若守住 32 支撐 → 有機會嘗試挑戰 36 壓力區",
+        "② 若跌破 32 → 下一支撐看 30，中期趨勢可能轉弱"
+      ],
+      "observations": [
+        "近 3 天能否站回 20 日均線（34）",
+        "支撐區 32 是否守住",
+        "外資連續賣超是否改變方向"
+      ]
+    },
+    "00919": {
+      "id": "00919",
+      "name": "群益台灣精選高息",
+      "type": "etf",
+      "close": 30.39,
+      "change_pct": -0.36,
+      "ma5": 30.92,
+      "ma20": 31.69,
+      "ma60": 31.57,
+      "ma20_direction": "down",
+      "kd_k": 57.6,
+      "kd_d": 54.5,
+      "rsi": 29.0,
+      "bb_up": 33.48,
+      "bb_low": 29.9,
+      "resistance": 33.29,
+      "support": 30.1,
+      "risk_level": 28.62,
+      "div_yield": null,
+      "per": null,
+      "rev_growth": null,
+      "inst_5d": {
+        "foreign_net": -10976254,
+        "trust_net": 0,
+        "total_net": -62689783
+      },
+      "score": -4,
+      "light": "🔴",
+      "signals": [
+        {
+          "key": "below_ma20",
+          "score": -1,
+          "label": "📉 跌破 20 日均線",
+          "desc": "收盤 30.39 < MA20 32，短期買盤變弱"
+        },
+        {
+          "key": "below_ma60",
+          "score": -1,
+          "label": "🔴 跌破 60 日均線",
+          "desc": "收盤 30.39 < MA60 32，中期趨勢轉弱"
+        },
+        {
+          "key": "ma20_down",
+          "score": -1,
+          "label": "↘ 20 日均線下彎",
+          "desc": "均線向下，代表短期動能減弱"
+        },
+        {
+          "key": "inst_sell",
+          "score": -1,
+          "label": "🏃 法人 5 日合計賣超",
+          "desc": "外資+投信合計賣超 62,689,783 股，籌碼偏空"
+        }
+      ],
+      "heat_flag": "oversold",
+      "conclusion": "技術面短期超跌，若基本面無惡化，可留意反彈機會。",
+      "scenarios": [
+        "① 若守住 30 支撐 → 有機會嘗試挑戰 33 壓力區",
+        "② 若跌破 30 → 下一支撐看 29，中期趨勢可能轉弱"
+      ],
+      "observations": [
+        "近 3 天能否站回 20 日均線（32）",
+        "支撐區 30 是否守住",
+        "外資連續賣超是否改變方向"
+      ]
+    },
+    "00406A": {
+      "id": "00406A",
+      "name": "主動中信台灣收益",
+      "type": "etf",
+      "close": 6.79,
+      "change_pct": -4.37,
+      "ma5": 7.44,
+      "ma20": 8.08,
+      "ma60": 8.98,
+      "ma20_direction": "down",
+      "kd_k": 33.0,
+      "kd_d": 37.5,
+      "rsi": 26.4,
+      "bb_up": 9.61,
+      "bb_low": 6.55,
+      "resistance": 9.44,
+      "support": 7.81,
+      "risk_level": 6.64,
+      "div_yield": null,
+      "per": null,
+      "rev_growth": null,
+      "inst_5d": {
+        "foreign_net": -333640866,
+        "trust_net": 0,
+        "total_net": -1957966445
+      },
+      "score": -4,
+      "light": "🔴",
+      "signals": [
+        {
+          "key": "below_ma20",
+          "score": -1,
+          "label": "📉 跌破 20 日均線",
+          "desc": "收盤 6.79 < MA20 8，短期買盤變弱"
+        },
+        {
+          "key": "below_ma60",
+          "score": -1,
+          "label": "🔴 跌破 60 日均線",
+          "desc": "收盤 6.79 < MA60 9，中期趨勢轉弱"
+        },
+        {
+          "key": "ma20_down",
+          "score": -1,
+          "label": "↘ 20 日均線下彎",
+          "desc": "均線向下，代表短期動能減弱"
+        },
+        {
+          "key": "inst_sell",
+          "score": -1,
+          "label": "🏃 法人 5 日合計賣超",
+          "desc": "外資+投信合計賣超 1,957,966,445 股，籌碼偏空"
+        }
+      ],
+      "heat_flag": "oversold",
+      "conclusion": "技術面短期超跌，若基本面無惡化，可留意反彈機會。",
+      "scenarios": [
+        "① 若守住 8 支撐 → 有機會嘗試挑戰 9 壓力區",
+        "② 若跌破 8 → 下一支撐看 7，中期趨勢可能轉弱"
+      ],
+      "observations": [
+        "近 3 天能否站回 20 日均線（8）",
+        "支撐區 8 是否守住",
+        "外資連續賣超是否改變方向"
+      ]
+    },
+    "00400A": {
+      "id": "00400A",
+      "name": "主動國泰動能高息",
+      "type": "etf",
+      "close": 11.22,
+      "change_pct": -4.35,
+      "ma5": 12.27,
+      "ma20": 13.11,
+      "ma60": 14.33,
+      "ma20_direction": "down",
+      "kd_k": 40.3,
+      "kd_d": 43.5,
+      "rsi": 27.8,
+      "bb_up": 15.4,
+      "bb_low": 10.83,
+      "resistance": 15.18,
+      "support": 12.56,
+      "risk_level": 10.78,
+      "div_yield": null,
+      "per": null,
+      "rev_growth": null,
+      "inst_5d": {
+        "foreign_net": -21745468,
+        "trust_net": 0,
+        "total_net": -49640736
+      },
+      "score": -4,
+      "light": "🔴",
+      "signals": [
+        {
+          "key": "below_ma20",
+          "score": -1,
+          "label": "📉 跌破 20 日均線",
+          "desc": "收盤 11.22 < MA20 13，短期買盤變弱"
+        },
+        {
+          "key": "below_ma60",
+          "score": -1,
+          "label": "🔴 跌破 60 日均線",
+          "desc": "收盤 11.22 < MA60 14，中期趨勢轉弱"
+        },
+        {
+          "key": "ma20_down",
+          "score": -1,
+          "label": "↘ 20 日均線下彎",
+          "desc": "均線向下，代表短期動能減弱"
+        },
+        {
+          "key": "inst_sell",
+          "score": -1,
+          "label": "🏃 法人 5 日合計賣超",
+          "desc": "外資+投信合計賣超 49,640,736 股，籌碼偏空"
+        }
+      ],
+      "heat_flag": "oversold",
+      "conclusion": "技術面短期超跌，若基本面無惡化，可留意反彈機會。",
+      "scenarios": [
+        "① 若守住 13 支撐 → 有機會嘗試挑戰 15 壓力區",
+        "② 若跌破 13 → 下一支撐看 11，中期趨勢可能轉弱"
+      ],
+      "observations": [
+        "近 3 天能否站回 20 日均線（13）",
+        "支撐區 13 是否守住",
+        "外資連續賣超是否改變方向"
+      ]
+    },
+    "00881": {
+      "id": "00881",
+      "name": "國泰台灣科技龍頭",
+      "type": "etf",
+      "close": 40.48,
+      "change_pct": -2.6,
+      "ma5": 43.27,
+      "ma20": 45.49,
+      "ma60": 49.14,
+      "ma20_direction": "down",
+      "kd_k": 48.1,
+      "kd_d": 49.4,
+      "rsi": 28.9,
+      "bb_up": 51.68,
+      "bb_low": 39.3,
+      "resistance": 50.99,
+      "support": 43.6,
+      "risk_level": 38.06,
+      "div_yield": null,
+      "per": null,
+      "rev_growth": null,
+      "inst_5d": {
+        "foreign_net": 970359,
+        "trust_net": -130000,
+        "total_net": 6205121
+      },
+      "score": -2,
+      "light": "🔴",
+      "signals": [
+        {
+          "key": "below_ma20",
+          "score": -1,
+          "label": "📉 跌破 20 日均線",
+          "desc": "收盤 40.48 < MA20 45，短期買盤變弱"
+        },
+        {
+          "key": "below_ma60",
+          "score": -1,
+          "label": "🔴 跌破 60 日均線",
+          "desc": "收盤 40.48 < MA60 49，中期趨勢轉弱"
+        },
+        {
+          "key": "ma20_down",
+          "score": -1,
+          "label": "↘ 20 日均線下彎",
+          "desc": "均線向下，代表短期動能減弱"
+        },
+        {
+          "key": "inst_buy",
+          "score": 1,
+          "label": "💰 法人 5 日合計買超",
+          "desc": "外資+投信合計買超 6,205,121 股，籌碼偏多"
+        }
+      ],
+      "heat_flag": "oversold",
+      "conclusion": "技術面短期超跌，若基本面無惡化，可留意反彈機會。",
+      "scenarios": [
+        "① 若守住 44 支撐 → 有機會嘗試挑戰 51 壓力區",
+        "② 若跌破 44 → 下一支撐看 38，中期趨勢可能轉弱"
+      ],
+      "observations": [
+        "近 3 天能否站回 20 日均線（45）",
+        "支撐區 44 是否守住",
+        "外資連續買超是否改變方向"
+      ]
+    },
+    "00927": {
+      "id": "00927",
+      "name": "群益半導體收益",
+      "type": "etf",
+      "close": 29.12,
+      "change_pct": -1.52,
+      "ma5": 30.59,
+      "ma20": 32.45,
+      "ma60": 34.9,
+      "ma20_direction": "down",
+      "kd_k": 49.0,
+      "kd_d": 46.6,
+      "rsi": 27.1,
+      "bb_up": 37.25,
+      "bb_low": 27.65,
+      "resistance": 36.66,
+      "support": 30.89,
+      "risk_level": 26.87,
+      "div_yield": null,
+      "per": null,
+      "rev_growth": null,
+      "inst_5d": {
+        "foreign_net": 2487912,
+        "trust_net": 0,
+        "total_net": -32027789
+      },
+      "score": -4,
+      "light": "🔴",
+      "signals": [
+        {
+          "key": "below_ma20",
+          "score": -1,
+          "label": "📉 跌破 20 日均線",
+          "desc": "收盤 29.12 < MA20 32，短期買盤變弱"
+        },
+        {
+          "key": "below_ma60",
+          "score": -1,
+          "label": "🔴 跌破 60 日均線",
+          "desc": "收盤 29.12 < MA60 35，中期趨勢轉弱"
+        },
+        {
+          "key": "ma20_down",
+          "score": -1,
+          "label": "↘ 20 日均線下彎",
+          "desc": "均線向下，代表短期動能減弱"
+        },
+        {
+          "key": "inst_sell",
+          "score": -1,
+          "label": "🏃 法人 5 日合計賣超",
+          "desc": "外資+投信合計賣超 32,027,789 股，籌碼偏空"
+        }
+      ],
+      "heat_flag": "oversold",
+      "conclusion": "技術面短期超跌，若基本面無惡化，可留意反彈機會。",
+      "scenarios": [
+        "① 若守住 31 支撐 → 有機會嘗試挑戰 37 壓力區",
+        "② 若跌破 31 → 下一支撐看 27，中期趨勢可能轉弱"
+      ],
+      "observations": [
+        "近 3 天能否站回 20 日均線（32）",
+        "支撐區 31 是否守住",
+        "外資連續買超是否改變方向"
+      ]
+    },
+    "00891": {
+      "id": "00891",
+      "name": "中信關鍵半導體",
+      "type": "etf",
+      "close": 27.93,
+      "change_pct": -8.12,
+      "ma5": 31.13,
+      "ma20": 32.69,
+      "ma60": 34.9,
+      "ma20_direction": "down",
+      "kd_k": 42.1,
+      "kd_d": 48.1,
+      "rsi": 27.1,
+      "bb_up": 37.17,
+      "bb_low": 28.22,
+      "resistance": 36.49,
+      "support": 31.15,
+      "risk_level": 27.39,
+      "div_yield": null,
+      "per": null,
+      "rev_growth": null,
+      "inst_5d": {
+        "foreign_net": -1362051,
+        "trust_net": 0,
+        "total_net": -93419726
+      },
+      "score": -4,
+      "light": "🔴",
+      "signals": [
+        {
+          "key": "below_ma20",
+          "score": -1,
+          "label": "📉 跌破 20 日均線",
+          "desc": "收盤 27.93 < MA20 33，短期買盤變弱"
+        },
+        {
+          "key": "below_ma60",
+          "score": -1,
+          "label": "🔴 跌破 60 日均線",
+          "desc": "收盤 27.93 < MA60 35，中期趨勢轉弱"
+        },
+        {
+          "key": "ma20_down",
+          "score": -1,
+          "label": "↘ 20 日均線下彎",
+          "desc": "均線向下，代表短期動能減弱"
+        },
+        {
+          "key": "inst_sell",
+          "score": -1,
+          "label": "🏃 法人 5 日合計賣超",
+          "desc": "外資+投信合計賣超 93,419,726 股，籌碼偏空"
+        }
+      ],
+      "heat_flag": "oversold",
+      "conclusion": "技術面短期超跌，若基本面無惡化，可留意反彈機會。",
+      "scenarios": [
+        "① 若守住 31 支撐 → 有機會嘗試挑戰 36 壓力區",
+        "② 若跌破 31 → 下一支撐看 27，中期趨勢可能轉弱"
+      ],
+      "observations": [
+        "近 3 天能否站回 20 日均線（33）",
+        "支撐區 31 是否守住",
+        "外資連續賣超是否改變方向"
+      ]
+    },
+    "2330": {
+      "id": "2330",
+      "name": "台積電",
+      "type": "stock",
+      "close": 2170.0,
+      "change_pct": -2.03,
+      "ma5": 2294.0,
+      "ma20": 2322.75,
+      "ma60": 2406.92,
+      "ma20_direction": "down",
+      "kd_k": 58.4,
+      "kd_d": 60.2,
+      "rsi": 34.0,
+      "bb_up": 2499.46,
+      "bb_low": 2146.04,
+      "resistance": 2467.23,
+      "support": 2213.46,
+      "risk_level": 2020.0,
+      "div_yield": 0.99,
+      "per": 22.54,
+      "rev_growth": 0.509,
+      "inst_5d": {
+        "foreign_net": -23607754,
+        "trust_net": 5423105,
+        "total_net": -8218692
+      },
+      "score": -3,
+      "light": "🔴",
+      "signals": [
+        {
+          "key": "below_ma20",
+          "score": -1,
+          "label": "📉 跌破 20 日均線",
+          "desc": "收盤 2170.0 < MA20 2323，短期買盤變弱"
+        },
+        {
+          "key": "below_ma60",
+          "score": -1,
+          "label": "🔴 跌破 60 日均線",
+          "desc": "收盤 2170.0 < MA60 2407，中期趨勢轉弱"
+        },
+        {
+          "key": "ma20_down",
+          "score": -1,
+          "label": "↘ 20 日均線下彎",
+          "desc": "均線向下，代表短期動能減弱"
+        },
+        {
+          "key": "inst_sell",
+          "score": -1,
+          "label": "🏃 法人 5 日合計賣超",
+          "desc": "外資+投信合計賣超 8,218,692 股，籌碼偏空"
+        },
+        {
+          "key": "rev_positive",
+          "score": 1,
+          "label": "📊 季度收入年增 50.9%",
+          "desc": "營收年增率為正，基本面向好"
+        }
+      ],
+      "heat_flag": null,
+      "conclusion": "跌破中期均線，中期趨勢轉弱，宜觀望為主。",
+      "scenarios": [
+        "① 若守住 2213 支撐 → 有機會嘗試挑戰 2467 壓力區",
+        "② 若跌破 2213 → 下一支撐看 2020，中期趨勢可能轉弱"
+      ],
+      "observations": [
+        "近 3 天能否站回 20 日均線（2323）",
+        "支撐區 2213 是否守住",
+        "外資連續賣超是否改變方向"
+      ]
+    },
+    "2454": {
+      "id": "2454",
+      "name": "聯發科",
+      "type": "stock",
+      "close": 3840.0,
+      "change_pct": 1.19,
+      "ma5": 3919.0,
+      "ma20": 3891.25,
+      "ma60": 4304.75,
+      "ma20_direction": "down",
+      "kd_k": 67.1,
+      "kd_d": 62.3,
+      "rsi": 41.8,
+      "bb_up": 4334.31,
+      "bb_low": 3448.19,
+      "resistance": 4319.66,
+      "support": 3709.88,
+      "risk_level": 3115.0,
+      "div_yield": 1.41,
+      "per": 61.04,
+      "rev_growth": 0.183,
+      "inst_5d": {
+        "foreign_net": 302215,
+        "trust_net": 1836408,
+        "total_net": 2769715
+      },
+      "score": -1,
+      "light": "🟡",
+      "signals": [
+        {
+          "key": "below_ma20",
+          "score": -1,
+          "label": "📉 跌破 20 日均線",
+          "desc": "收盤 3840.0 < MA20 3891，短期買盤變弱"
+        },
+        {
+          "key": "below_ma60",
+          "score": -1,
+          "label": "🔴 跌破 60 日均線",
+          "desc": "收盤 3840.0 < MA60 4305，中期趨勢轉弱"
+        },
+        {
+          "key": "ma20_down",
+          "score": -1,
+          "label": "↘ 20 日均線下彎",
+          "desc": "均線向下，代表短期動能減弱"
+        },
+        {
+          "key": "inst_buy",
+          "score": 1,
+          "label": "💰 法人 5 日合計買超",
+          "desc": "外資+投信合計買超 2,769,715 股，籌碼偏多"
+        },
+        {
+          "key": "rev_positive",
+          "score": 1,
+          "label": "📊 季度收入年增 18.3%",
+          "desc": "營收年增率為正，基本面向好"
+        }
+      ],
+      "heat_flag": null,
+      "conclusion": "多空訊號分歧，目前處於整理狀態，等待方向明確。",
+      "scenarios": [
+        "① 若守住 3710 支撐 → 有機會嘗試挑戰 4320 壓力區",
+        "② 若跌破 3710 → 下一支撐看 3115，中期趨勢可能轉弱"
+      ],
+      "observations": [
+        "近 3 天能否站回 20 日均線（3891）",
+        "支撐區 3710 是否守住",
+        "外資連續買超是否改變方向"
+      ]
+    },
+    "2317": {
+      "id": "2317",
+      "name": "鴻海",
+      "type": "stock",
+      "close": 219.0,
+      "change_pct": 0.23,
+      "ma5": 232.1,
+      "ma20": 240.55,
+      "ma60": 246.37,
+      "ma20_direction": "down",
+      "kd_k": 39.9,
+      "kd_d": 50.8,
+      "rsi": 30.1,
+      "bb_up": 259.78,
+      "bb_low": 221.32,
+      "resistance": 256.64,
+      "support": 229.43,
+      "risk_level": 212.5,
+      "div_yield": 3.28,
+      "per": 13.22,
+      "rev_growth": 0.465,
+      "inst_5d": {
+        "foreign_net": -18176554,
+        "trust_net": -2515528,
+        "total_net": -15620474
+      },
+      "score": -3,
+      "light": "🔴",
+      "signals": [
+        {
+          "key": "below_ma20",
+          "score": -1,
+          "label": "📉 跌破 20 日均線",
+          "desc": "收盤 219.0 < MA20 241，短期買盤變弱"
+        },
+        {
+          "key": "below_ma60",
+          "score": -1,
+          "label": "🔴 跌破 60 日均線",
+          "desc": "收盤 219.0 < MA60 246，中期趨勢轉弱"
+        },
+        {
+          "key": "ma20_down",
+          "score": -1,
+          "label": "↘ 20 日均線下彎",
+          "desc": "均線向下，代表短期動能減弱"
+        },
+        {
+          "key": "inst_sell",
+          "score": -1,
+          "label": "🏃 法人 5 日合計賣超",
+          "desc": "外資+投信合計賣超 15,620,474 股，籌碼偏空"
+        },
+        {
+          "key": "rev_positive",
+          "score": 1,
+          "label": "📊 季度收入年增 46.5%",
+          "desc": "營收年增率為正，基本面向好"
+        }
+      ],
+      "heat_flag": null,
+      "conclusion": "跌破中期均線，中期趨勢轉弱，宜觀望為主。",
+      "scenarios": [
+        "① 若守住 229 支撐 → 有機會嘗試挑戰 257 壓力區",
+        "② 若跌破 229 → 下一支撐看 212，中期趨勢可能轉弱"
+      ],
+      "observations": [
+        "近 3 天能否站回 20 日均線（241）",
+        "支撐區 229 是否守住",
+        "外資連續賣超是否改變方向"
+      ]
+    },
+    "2308": {
+      "id": "2308",
+      "name": "台達電",
+      "type": "stock",
+      "close": 1055.0,
+      "change_pct": -5.8,
+      "ma5": 1190.0,
+      "ma20": 1332.0,
+      "ma60": 1643.17,
+      "ma20_direction": "down",
+      "kd_k": 35.0,
+      "kd_d": 39.9,
+      "rsi": 25.6,
+      "bb_up": 1708.33,
+      "bb_low": 955.67,
+      "resistance": 1684.17,
+      "support": 1331.58,
+      "risk_level": 1020.0,
+      "div_yield": 1.04,
+      "per": 33.63,
+      "rev_growth": 0.311,
+      "inst_5d": {
+        "foreign_net": -9507418,
+        "trust_net": -2034729,
+        "total_net": -9903819
+      },
+      "score": -3,
+      "light": "🔴",
+      "signals": [
+        {
+          "key": "below_ma20",
+          "score": -1,
+          "label": "📉 跌破 20 日均線",
+          "desc": "收盤 1055.0 < MA20 1332，短期買盤變弱"
+        },
+        {
+          "key": "below_ma60",
+          "score": -1,
+          "label": "🔴 跌破 60 日均線",
+          "desc": "收盤 1055.0 < MA60 1643，中期趨勢轉弱"
+        },
+        {
+          "key": "ma20_down",
+          "score": -1,
+          "label": "↘ 20 日均線下彎",
+          "desc": "均線向下，代表短期動能減弱"
+        },
+        {
+          "key": "inst_sell",
+          "score": -1,
+          "label": "🏃 法人 5 日合計賣超",
+          "desc": "外資+投信合計賣超 9,903,819 股，籌碼偏空"
+        },
+        {
+          "key": "rev_positive",
+          "score": 1,
+          "label": "📊 季度收入年增 31.1%",
+          "desc": "營收年增率為正，基本面向好"
+        }
+      ],
+      "heat_flag": "oversold",
+      "conclusion": "技術面短期超跌，若基本面無惡化，可留意反彈機會。",
+      "scenarios": [
+        "① 若守住 1332 支撐 → 有機會嘗試挑戰 1684 壓力區",
+        "② 若跌破 1332 → 下一支撐看 1020，中期趨勢可能轉弱"
+      ],
+      "observations": [
+        "近 3 天能否站回 20 日均線（1332）",
+        "支撐區 1332 是否守住",
+        "外資連續賣超是否改變方向"
+      ]
+    },
+    "2303": {
+      "id": "2303",
+      "name": "聯電",
+      "type": "stock",
+      "close": 92.4,
+      "change_pct": -2.94,
+      "ma5": 98.82,
+      "ma20": 109.18,
+      "ma60": 129.91,
+      "ma20_direction": "down",
+      "kd_k": 36.0,
+      "kd_d": 37.2,
+      "rsi": 22.9,
+      "bb_up": 134.76,
+      "bb_low": 83.61,
+      "resistance": 133.13,
+      "support": 109.26,
+      "risk_level": 88.6,
+      "div_yield": 2.74,
+      "per": 14.06,
+      "rev_growth": 0.256,
+      "inst_5d": {
+        "foreign_net": 71879540,
+        "trust_net": -52028018,
+        "total_net": 26357459
+      },
+      "score": -1,
+      "light": "🟡",
+      "signals": [
+        {
+          "key": "below_ma20",
+          "score": -1,
+          "label": "📉 跌破 20 日均線",
+          "desc": "收盤 92.4 < MA20 109，短期買盤變弱"
+        },
+        {
+          "key": "below_ma60",
+          "score": -1,
+          "label": "🔴 跌破 60 日均線",
+          "desc": "收盤 92.4 < MA60 130，中期趨勢轉弱"
+        },
+        {
+          "key": "ma20_down",
+          "score": -1,
+          "label": "↘ 20 日均線下彎",
+          "desc": "均線向下，代表短期動能減弱"
+        },
+        {
+          "key": "inst_buy",
+          "score": 1,
+          "label": "💰 法人 5 日合計買超",
+          "desc": "外資+投信合計買超 26,357,459 股，籌碼偏多"
+        },
+        {
+          "key": "rev_positive",
+          "score": 1,
+          "label": "📊 季度收入年增 25.6%",
+          "desc": "營收年增率為正，基本面向好"
+        }
+      ],
+      "heat_flag": "oversold",
+      "conclusion": "技術面短期超跌，若基本面無惡化，可留意反彈機會。",
+      "scenarios": [
+        "① 若守住 109 支撐 → 有機會嘗試挑戰 133 壓力區",
+        "② 若跌破 109 → 下一支撐看 89，中期趨勢可能轉弱"
+      ],
+      "observations": [
+        "近 3 天能否站回 20 日均線（109）",
+        "支撐區 109 是否守住",
+        "外資連續買超是否改變方向"
+      ]
+    },
+    "3711": {
+      "id": "3711",
+      "name": "日月光投控",
+      "type": "stock",
+      "close": 520.0,
+      "change_pct": -5.45,
+      "ma5": 574.2,
+      "ma20": 620.1,
+      "ma60": 642.23,
+      "ma20_direction": "down",
+      "kd_k": 30.4,
+      "kd_d": 35.7,
+      "rsi": 28.8,
+      "bb_up": 727.76,
+      "bb_low": 512.44,
+      "resistance": 718.38,
+      "support": 574.12,
+      "risk_level": 506.0,
+      "div_yield": 1.2,
+      "per": 31.57,
+      "rev_growth": 0.448,
+      "inst_5d": {
+        "foreign_net": -14720435,
+        "trust_net": 1371016,
+        "total_net": -11034048
+      },
+      "score": -3,
+      "light": "🔴",
+      "signals": [
+        {
+          "key": "below_ma20",
+          "score": -1,
+          "label": "📉 跌破 20 日均線",
+          "desc": "收盤 520.0 < MA20 620，短期買盤變弱"
+        },
+        {
+          "key": "below_ma60",
+          "score": -1,
+          "label": "🔴 跌破 60 日均線",
+          "desc": "收盤 520.0 < MA60 642，中期趨勢轉弱"
+        },
+        {
+          "key": "ma20_down",
+          "score": -1,
+          "label": "↘ 20 日均線下彎",
+          "desc": "均線向下，代表短期動能減弱"
+        },
+        {
+          "key": "inst_sell",
+          "score": -1,
+          "label": "🏃 法人 5 日合計賣超",
+          "desc": "外資+投信合計賣超 11,034,048 股，籌碼偏空"
+        },
+        {
+          "key": "rev_positive",
+          "score": 1,
+          "label": "📊 季度收入年增 44.8%",
+          "desc": "營收年增率為正，基本面向好"
+        }
+      ],
+      "heat_flag": "oversold",
+      "conclusion": "技術面短期超跌，若基本面無惡化，可留意反彈機會。",
+      "scenarios": [
+        "① 若守住 574 支撐 → 有機會嘗試挑戰 718 壓力區",
+        "② 若跌破 574 → 下一支撐看 506，中期趨勢可能轉弱"
+      ],
+      "observations": [
+        "近 3 天能否站回 20 日均線（620）",
+        "支撐區 574 是否守住",
+        "外資連續賣超是否改變方向"
+      ]
+    },
+    "2881": {
+      "id": "2881",
+      "name": "富邦金",
+      "type": "stock",
+      "close": 150.5,
+      "change_pct": -0.99,
+      "ma5": 156.5,
+      "ma20": 156.8,
+      "ma60": 151.95,
+      "ma20_direction": "down",
+      "kd_k": 59.6,
+      "kd_d": 62.1,
+      "rsi": 38.2,
+      "bb_up": 165.2,
+      "bb_low": 148.4,
+      "resistance": 164.6,
+      "support": 145.97,
+      "risk_level": 125.5,
+      "div_yield": 2.8,
+      "per": 14.21,
+      "rev_growth": -0.254,
+      "inst_5d": {
+        "foreign_net": -18939065,
+        "trust_net": 28708842,
+        "total_net": 12137792
+      },
+      "score": -3,
+      "light": "🔴",
+      "signals": [
+        {
+          "key": "below_ma20",
+          "score": -1,
+          "label": "📉 跌破 20 日均線",
+          "desc": "收盤 150.5 < MA20 157，短期買盤變弱"
+        },
+        {
+          "key": "below_ma60",
+          "score": -1,
+          "label": "🔴 跌破 60 日均線",
+          "desc": "收盤 150.5 < MA60 152，中期趨勢轉弱"
+        },
+        {
+          "key": "ma20_down",
+          "score": -1,
+          "label": "↘ 20 日均線下彎",
+          "desc": "均線向下，代表短期動能減弱"
+        },
+        {
+          "key": "inst_buy",
+          "score": 1,
+          "label": "💰 法人 5 日合計買超",
+          "desc": "外資+投信合計買超 12,137,792 股，籌碼偏多"
+        },
+        {
+          "key": "rev_negative",
+          "score": -1,
+          "label": "📊 季度收入年減 25.4%",
+          "desc": "營收年增率為負，基本面偏弱"
+        }
+      ],
+      "heat_flag": null,
+      "conclusion": "跌破中期均線，中期趨勢轉弱，宜觀望為主。",
+      "scenarios": [
+        "① 若守住 146 支撐 → 有機會嘗試挑戰 165 壓力區",
+        "② 若跌破 146 → 下一支撐看 126，中期趨勢可能轉弱"
+      ],
+      "observations": [
+        "近 3 天能否站回 20 日均線（157）",
+        "支撐區 146 是否守住",
+        "外資連續賣超是否改變方向"
+      ]
+    },
+    "2891": {
+      "id": "2891",
+      "name": "中信金",
+      "type": "stock",
+      "close": 77.5,
+      "change_pct": 0.91,
+      "ma5": 76.62,
+      "ma20": 75.0,
+      "ma60": 70.38,
+      "ma20_direction": "up",
+      "kd_k": 77.9,
+      "kd_d": 76.6,
+      "rsi": 58.4,
+      "bb_up": 78.09,
+      "bb_low": 71.9,
+      "resistance": 79.34,
+      "support": 68.94,
+      "risk_level": 62.1,
+      "div_yield": 3.26,
+      "per": 18.37,
+      "rev_growth": -0.202,
+      "inst_5d": {
+        "foreign_net": -674309,
+        "trust_net": 48677700,
+        "total_net": 56466936
+      },
+      "score": 3,
+      "light": "🟢",
+      "signals": [
+        {
+          "key": "above_ma20",
+          "score": 1,
+          "label": "📈 站上 20 日均線",
+          "desc": "收盤 77.5 > MA20 75，短期買盤強"
+        },
+        {
+          "key": "above_ma60",
+          "score": 1,
+          "label": "🟢 站上 60 日均線",
+          "desc": "收盤 77.5 > MA60 70，中期趨勢偏多"
+        },
+        {
+          "key": "ma20_up",
+          "score": 1,
+          "label": "↗ 20 日均線上彎",
+          "desc": "均線向上，代表短期動能增強"
+        },
+        {
+          "key": "inst_buy",
+          "score": 1,
+          "label": "💰 法人 5 日合計買超",
+          "desc": "外資+投信合計買超 56,466,936 股，籌碼偏多"
+        },
+        {
+          "key": "rev_negative",
+          "score": -1,
+          "label": "📊 季度收入年減 20.2%",
+          "desc": "營收年增率為負，基本面偏弱"
+        }
+      ],
+      "heat_flag": null,
+      "conclusion": "多項指標偏強，均線向上，趨勢明確，但留意追高風險。",
+      "scenarios": [
+        "① 若守住 69 支撐 → 有機會嘗試挑戰 79 壓力區",
+        "② 若跌破 69 → 下一支撐看 62，中期趨勢可能轉弱"
+      ],
+      "observations": [
+        "20 日均線（75）能否持續支撐",
+        "支撐區 69 是否守住",
+        "KD 偏高（78），觀察是否出現死叉"
+      ]
+    },
+    "2884": {
+      "id": "2884",
+      "name": "玉山金",
+      "type": "stock",
+      "close": 46.65,
+      "change_pct": -3.42,
+      "ma5": 47.61,
+      "ma20": 48.19,
+      "ma60": 45.47,
+      "ma20_direction": "down",
+      "kd_k": 61.0,
+      "kd_d": 59.2,
+      "rsi": 39.8,
+      "bb_up": 50.12,
+      "bb_low": 46.26,
+      "resistance": 50.11,
+      "support": 44.91,
+      "risk_level": 37.05,
+      "div_yield": 2.9,
+      "per": 20.04,
+      "rev_growth": 0.344,
+      "inst_5d": {
+        "foreign_net": 49284296,
+        "trust_net": -43614000,
+        "total_net": 15008542
+      },
+      "score": 1,
+      "light": "🟡",
+      "signals": [
+        {
+          "key": "below_ma20",
+          "score": -1,
+          "label": "📉 跌破 20 日均線",
+          "desc": "收盤 46.65 < MA20 48，短期買盤變弱"
+        },
+        {
+          "key": "above_ma60",
+          "score": 1,
+          "label": "🟢 站上 60 日均線",
+          "desc": "收盤 46.65 > MA60 45，中期趨勢偏多"
+        },
+        {
+          "key": "ma20_down",
+          "score": -1,
+          "label": "↘ 20 日均線下彎",
+          "desc": "均線向下，代表短期動能減弱"
+        },
+        {
+          "key": "inst_buy",
+          "score": 1,
+          "label": "💰 法人 5 日合計買超",
+          "desc": "外資+投信合計買超 15,008,542 股，籌碼偏多"
+        },
+        {
+          "key": "rev_positive",
+          "score": 1,
+          "label": "📊 季度收入年增 34.4%",
+          "desc": "營收年增率為正，基本面向好"
+        }
+      ],
+      "heat_flag": null,
+      "conclusion": "多空訊號分歧，目前處於整理狀態，等待方向明確。",
+      "scenarios": [
+        "① 若守住 45 支撐 → 有機會嘗試挑戰 50 壓力區",
+        "② 若跌破 45 → 下一支撐看 37，中期趨勢可能轉弱"
+      ],
+      "observations": [
+        "近 3 天能否站回 20 日均線（48）",
+        "支撐區 45 是否守住",
+        "外資連續買超是否改變方向"
+      ]
+    },
+    "2412": {
+      "id": "2412",
+      "name": "中華電",
+      "type": "stock",
+      "close": 164.5,
+      "change_pct": 0.61,
+      "ma5": 163.2,
+      "ma20": 159.82,
+      "ma60": 148.27,
+      "ma20_direction": "up",
+      "kd_k": 64.6,
+      "kd_d": 61.9,
+      "rsi": 68.2,
+      "bb_up": 165.91,
+      "bb_low": 153.74,
+      "resistance": 166.95,
+      "support": 150.13,
+      "risk_level": 135.0,
+      "div_yield": 3.18,
+      "per": 30.0,
+      "rev_growth": 0.167,
+      "inst_5d": {
+        "foreign_net": 10880663,
+        "trust_net": -5340533,
+        "total_net": 7397034
+      },
+      "score": 5,
+      "light": "🟢",
+      "signals": [
+        {
+          "key": "above_ma20",
+          "score": 1,
+          "label": "📈 站上 20 日均線",
+          "desc": "收盤 164.5 > MA20 160，短期買盤強"
+        },
+        {
+          "key": "above_ma60",
+          "score": 1,
+          "label": "🟢 站上 60 日均線",
+          "desc": "收盤 164.5 > MA60 148，中期趨勢偏多"
+        },
+        {
+          "key": "ma20_up",
+          "score": 1,
+          "label": "↗ 20 日均線上彎",
+          "desc": "均線向上，代表短期動能增強"
+        },
+        {
+          "key": "inst_buy",
+          "score": 1,
+          "label": "💰 法人 5 日合計買超",
+          "desc": "外資+投信合計買超 7,397,034 股，籌碼偏多"
+        },
+        {
+          "key": "rev_positive",
+          "score": 1,
+          "label": "📊 季度收入年增 16.7%",
+          "desc": "營收年增率為正，基本面向好"
+        }
+      ],
+      "heat_flag": null,
+      "conclusion": "多項指標偏強，均線向上，趨勢明確，但留意追高風險。",
+      "scenarios": [
+        "① 若守住 150 支撐 → 有機會嘗試挑戰 167 壓力區",
+        "② 若跌破 150 → 下一支撐看 135，中期趨勢可能轉弱"
+      ],
+      "observations": [
+        "20 日均線（160）能否持續支撐",
+        "支撐區 150 是否守住",
+        "外資連續買超是否改變方向"
+      ]
+    }
+  },
+  "summary": {
+    "green": 2,
+    "yellow": 3,
+    "red": 15
+  }
+}

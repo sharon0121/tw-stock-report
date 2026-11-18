@@ -1,9 +1,7 @@
 name: 台股盤後報告
 
 on:
-  schedule:
-    - cron: '0 7 * * 1-5'    # 07:00 UTC = 15:00 台灣時間（週一至五）
-  workflow_dispatch:            # 允許手動觸發
+  workflow_dispatch:    # 由 Vercel Cron 透過 GitHub API 主動觸發，不再使用 GitHub 排程（延遲不穩定）
 
 permissions:
   contents: write
